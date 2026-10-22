@@ -1,13 +1,13 @@
 let context,interval=null,voices=[],run=0;
 export async function enableAudio(){context??=new (window.AudioContext||window.webkitAudioContext)();if(context.state==='suspended')await context.resume();return context;}
 function tone(ctx,type,time,volume=.6){
- const gain=ctx.createGain();gain.connect(ctx.destination);gain.gain.setValueAtTime(.001,time);gain.gain.exponentialRampToValueAtTime(Math.max(.00001,volume),time+.005);gain.gain.exponentialRampToValueAtTime(.001,time+(type==='G'?1.4:type==='C'?.22:.46));
+ const gain=ctx.createGain();gain.connect(ctx.destination);gain.gain.setValueAtTime(.001,time);gain.gain.exponentialRampToValueAtTime(Math.max(.00001,volume),time+.005);gain.gain.exponentialRampToValueAtTime(.001,time+(type==='B'?1.25:type==='G'?.85:type==='C'?.22:type==='H'?.3:.46));
  const nodes=[];
  if(type==='C'){
   const buffer=ctx.createBuffer(1,Math.ceil(ctx.sampleRate*.25),ctx.sampleRate),a=buffer.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=Math.random()*2-1;
   const noise=ctx.createBufferSource(),filter=ctx.createBiquadFilter();noise.buffer=buffer;filter.type='highpass';filter.frequency.value=5000;noise.connect(filter);filter.connect(gain);noise.start(time);noise.stop(time+.25);nodes.push(noise);
  }else{
-  (type==='G'?[210,329,447,603]:[125,183]).forEach((freq,i)=>{const osc=ctx.createOscillator(),level=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,time);if(type==='D')osc.frequency.exponentialRampToValueAtTime(freq*.38,time+.22);level.gain.value=(type==='G'?.28:.5)/(i+1);osc.connect(level);level.connect(gain);osc.start(time);osc.stop(time+(type==='G'?1.45:.5));nodes.push(osc);});
+  (type==='B'?[78,116,174,247]:type==='G'?[330,493,659]:type==='H'?[250,370]:[112,168]).forEach((freq,i)=>{const osc=ctx.createOscillator(),level=ctx.createGain();osc.type=type==='B'||type==='G'?'sine':'triangle';osc.frequency.setValueAtTime(freq,time);if(type==='D')osc.frequency.exponentialRampToValueAtTime(freq*.38,time+.22);if(type==='H')osc.frequency.exponentialRampToValueAtTime(freq*.72,time+.12);level.gain.value=(type==='B'?.34:type==='G'?.22:type==='H'?.32:.5)/(i+1);osc.connect(level);level.connect(gain);osc.start(time);osc.stop(time+(type==='B'?1.3:type==='G'?.9:type==='H'?.34:.5));nodes.push(osc);});
  }
  nodes.forEach(n=>{if(ctx===context){voices.push(n);n.onended=()=>{voices=voices.filter(v=>v!==n);n.disconnect();};}});
  return nodes;
