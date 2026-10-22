@@ -100,3 +100,25 @@ body.drums-active{background:#090807;color:#eee7d9}body.drums-active>header,body
 /* Two-character composition: the drum anchors the left foreground and the lion answers on the right. */
 .drum-theater{background:radial-gradient(ellipse at 67% 42%,#54301b 0%,#25150e 38%,#0b0908 76%)}.drum-halo{left:34%;top:62%;width:min(47vw,530px);border-color:#bd914248}.stage-drum{left:34%;top:64%;width:min(58%,730px);height:70%;z-index:5}.stage-lion{left:70%;bottom:7%;width:min(45%,510px);z-index:3;transform:translateX(-50%);animation:lion-body-idle 3.8s ease-in-out infinite}.lion-sprite{animation:lion-head-idle 3.1s ease-in-out infinite,lion-blink 6.2s steps(1,end) infinite}.drum-theater[data-mood="light"] .stage-lion{animation:lion-body-nod .56s ease-out 1}.drum-theater[data-mood="light"] .lion-sprite{animation:lion-head-nod .56s ease-out 1,lion-frame-wink .56s steps(1,end) 1}.drum-theater[data-mood="fast"] .stage-lion{animation:lion-body-step .34s ease-in-out 2}.drum-theater[data-mood="fast"] .lion-sprite{animation:lion-head-shake .34s ease-in-out 2,lion-frame-shake .34s steps(1,end) 2}.drum-theater[data-mood="heavy"] .stage-lion{animation:lion-body-rear .8s cubic-bezier(.2,.9,.3,1) 1}.drum-theater[data-mood="heavy"] .lion-sprite{animation:lion-head-rear .8s cubic-bezier(.2,.9,.3,1) 1,lion-frame-paw .8s steps(1,end) 1}.drum-theater[data-mood="combo"] .stage-lion{animation:lion-body-hop .74s cubic-bezier(.2,.8,.2,1) 1}.drum-theater[data-mood="combo"] .lion-sprite{animation:lion-head-hop .74s cubic-bezier(.2,.8,.2,1) 1,lion-frame-hop .74s steps(1,end) 1}.theater-cloud.cloud-one{left:48%}.theater-cloud.cloud-two{right:5%}@keyframes lion-body-idle{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}@keyframes lion-head-idle{0%,100%{transform:rotate(-2deg) translateY(0)}25%{transform:rotate(2deg) translateY(-2px)}52%{transform:rotate(3deg) translateY(-5px)}78%{transform:rotate(-1deg) translateY(-2px)}}@keyframes lion-body-nod{0%,100%{transform:translateX(-50%) translateY(0) rotate(0)}42%{transform:translateX(-50%) translateY(-12px) rotate(-3deg)}72%{transform:translateX(-50%) translateY(3px) rotate(1deg)}}@keyframes lion-head-nod{0%,100%{transform:rotate(0)}35%{transform:rotate(-7deg) translateY(-4px)}68%{transform:rotate(3deg) translateY(2px)}}@keyframes lion-body-step{0%,100%{transform:translateX(-50%) translateY(0) rotate(0)}25%{transform:translateX(calc(-50% - 10px)) translateY(-5px) rotate(-2deg)}75%{transform:translateX(calc(-50% + 9px)) translateY(1px) rotate(2deg)}}@keyframes lion-head-shake{0%,100%{transform:rotate(0)}30%{transform:rotate(-8deg) translateX(-5px)}68%{transform:rotate(8deg) translateX(5px)}}@keyframes lion-body-rear{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}32%{transform:translateX(-50%) translateY(-30px) scale(1.04)}58%{transform:translateX(-50%) translateY(-23px) scale(1.02)}}@keyframes lion-head-rear{0%,100%{transform:rotate(0)}32%{transform:rotate(-7deg) translateY(-4px)}60%{transform:rotate(5deg) translateY(-2px)}}@keyframes lion-body-hop{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}39%{transform:translateX(-50%) translateY(-48px) scale(1.05)}68%{transform:translateX(-50%) translateY(-20px) scale(1.02)}}@keyframes lion-head-hop{0%,100%{transform:rotate(0)}38%{transform:rotate(-8deg) translateY(-8px)}65%{transform:rotate(6deg) translateY(-3px)}}
 @media(max-width:700px){.drum-halo{left:39%;top:60%;width:77vw}.stage-drum{left:41%;top:64%;width:88%;height:68%}.stage-lion{left:70%;bottom:8%;width:min(66%,340px)}.theater-cloud.cloud-one{left:44%}.theater-cloud.cloud-two{right:3%}}
+
+/* Keep the drum scene visible on entry and place the performers side by side. */
+body.drums-active .masthead{height:68px}
+body.drums-active nav button{height:46px}
+body.drums-active .drum-experience{padding-top:18px}
+body.drums-active .drum-heading{margin-bottom:12px}
+.drum-theater{height:clamp(390px,55vh,560px);min-height:390px}
+.drum-halo{left:29%;top:49%;width:min(42%,550px)}
+.stage-drum{left:29%;top:51%;width:min(54%,690px);height:96%}
+.stage-lion{left:74%;bottom:2%;width:min(38%,430px)}
+.stage-floor{left:4%;right:4%}
+@media(max-width:700px){
+ body.drums-active .masthead{height:66px}
+ body.drums-active nav button{height:48px}
+ body.drums-active .drum-heading{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;align-items:center}
+ body.drums-active .drum-heading .eyebrow{grid-column:1/-1}
+ body.drums-active .drum-heading p{grid-column:1/-1;margin:0}
+ .drum-theater{height:clamp(390px,64vh,520px)}
+ .drum-halo{left:31%;top:48%;width:60vw}
+ .stage-drum{left:31%;top:51%;width:68%;height:83%}
+ .stage-lion{left:73%;bottom:3%;width:min(52%,300px)}
+}
