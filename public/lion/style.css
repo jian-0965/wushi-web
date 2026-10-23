@@ -236,6 +236,10 @@ body.agent-active footer em{color:#d1ac63}
 .agent-console .result-details{border-color:#493a28;color:#bda77e}
 .agent-console .result-details summary,.agent-console .result-details li span{color:#b8aa94}
 .agent-console .result-details .source{color:#d1ad68}
+.agent-console .audit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0 18px}
+.agent-console .audit-grid p{margin:0;padding:10px 12px;border:1px solid #403321;background:#17130e}
+.agent-console .audit-grid b{display:block;color:#dfc27e;font-size:10px;font-weight:500}
+.agent-console .audit-grid span{display:block;margin-top:4px;color:#a99a82;font-size:9px;line-height:1.65}
 .agent-console .uncertainty{color:#b5a17e;border-color:#bd984f}
 .agent-console .notice{color:#dfc98f;background:#3b2a13;border-color:#80602f}
 .agent-console .feature-tags span{background:#352719;color:#e1c47d;border:1px solid #67502c}
@@ -256,7 +260,7 @@ body.agent-active footer em{color:#d1ac63}
 .agent-note{width:min(980px,100%);align-self:center;margin-top:11px;color:#827865;font-size:9px}
 body.agent-active .quiet-note a{color:#e1bd6c}
 body.agent-active .error{color:#ff9c82;background:#3a1712;border-color:#7e3326}
-@media(max-width:760px){body.agent-active main{padding:0 17px 25px}.agent-experience{min-height:calc(100vh - 190px);padding-top:20px}.agent-heading{margin-bottom:13px}.agent-heading h1{font-size:31px}.agent-heading>p{font-size:10px}.agent-console{min-height:max(570px,calc(100vh - 285px));padding:0 14px 13px}.agent-console-top{height:49px}.agent-console-top>span{font-size:10px}.agent-console-top>small{font-size:8px}.agent-stage{min-height:330px;padding:15px 0}.agent-orbit{width:53px;height:53px;font-size:25px}.agent-welcome>p{font-size:10px;margin-bottom:17px}.agent-console .prompt-chips{grid-template-columns:1fr;gap:7px}.agent-console .prompt-chips button{min-height:42px;padding:10px 12px;font-size:10px}.agent-console .composer{padding:14px}.agent-console textarea{min-height:90px;font-size:13px}.agent-console .composer-bottom{gap:8px;flex-wrap:wrap}.agent-console .composer-tip{font-size:8px}.agent-console .primary{padding:11px 16px}.agent-console .agent-result{max-height:44vh;padding:16px}.agent-console .result-top{display:block}.agent-console .result-top>div{margin-top:7px}.agent-note{line-height:1.6}}
+@media(max-width:760px){body.agent-active main{padding:0 17px 25px}.agent-experience{min-height:calc(100vh - 190px);padding-top:20px}.agent-heading{margin-bottom:13px}.agent-heading h1{font-size:31px}.agent-heading>p{font-size:10px}.agent-console{min-height:max(570px,calc(100vh - 285px));padding:0 14px 13px}.agent-console-top{height:49px}.agent-console-top>span{font-size:10px}.agent-console-top>small{font-size:8px}.agent-stage{min-height:330px;padding:15px 0}.agent-orbit{width:53px;height:53px;font-size:25px}.agent-welcome>p{font-size:10px;margin-bottom:17px}.agent-console .prompt-chips{grid-template-columns:1fr;gap:7px}.agent-console .prompt-chips button{min-height:42px;padding:10px 12px;font-size:10px}.agent-console .composer{padding:14px}.agent-console textarea{min-height:90px;font-size:13px}.agent-console .composer-bottom{gap:8px;flex-wrap:wrap}.agent-console .composer-tip{font-size:8px}.agent-console .primary{padding:11px 16px}.agent-console .agent-result{max-height:44vh;padding:16px}.agent-console .result-top{display:block}.agent-console .result-top>div{margin-top:7px}.agent-console .audit-grid{grid-template-columns:1fr}.agent-note{line-height:1.6}}
 
 /* Four-character Chinese title on the opening hero. */
 .jack-title{font:700 clamp(84px,13.5vw,232px)/.9 "Noto Serif SC","Songti SC",STSong,SimSun,serif;letter-spacing:.08em;color:#b5a982;text-shadow:0 2px 0 #d2c6a5,0 16px 50px #000a}
