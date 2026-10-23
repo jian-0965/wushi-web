@@ -3,8 +3,10 @@ import {knowledge,sources,regions,craftSteps,rhythms} from '../public/lion/data.
 const out=(body,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 const str=(v,n)=>typeof v==='string'&&v.length<=n;
 const record=v=>v&&typeof v==='object'&&!Array.isArray(v);
-const tokens=s=>{const t=String(s).toLowerCase().replace(/\s+/g,'');return [...new Set([...t.matchAll(/[a-z]+|[\u4e00-\u9fff]{1,2}/g)].map(x=>x[0]).concat([...t].map((_,i)=>t.slice(i,i+2))))];};
-export function searchHeritage(query){const terms=tokens(query);return knowledge.map(d=>({...d,rank:terms.reduce((n,t)=>n+(d.tags.includes(t)?3:0)+(d.title.includes(t)?2:0)+(d.text.includes(t)?1:0),0)})).filter(d=>d.rank>0).sort((a,b)=>b.rank-a.rank).slice(0,5).map(({rank,...d})=>({...d,reference:sources[d.source]}));}
+const stopWords=new Set(['什么','怎么','如何','为什么','这个','那个','可以','介绍','一下','请问','帮我','看看','图片','照片','狮头','醒狮','舞狮','相关','区别','特点','属于']);
+const expansions={南狮:['广东醒狮','佛山','岭南'],佛山:['南狮','广东醒狮','岭南'],北狮:['徐水','北方'],鹤山:['鸭嘴','佛鹤装'],图片:['识别','狮头','样式'],识别:['图片','佛山装','鹤山装'],工艺:['制作','竹篾','扎作'],制作:['工艺','扎作'],鼓点:['音乐','节奏','锣','钹'],采青:['寻青','见青','探青','吐青'],脸谱:['寓意','颜色','关公','刘备','张飞']};
+const tokens=s=>{const text=String(s).toLowerCase().replace(/\s+/g,'');const raw=[...text.matchAll(/[a-z]+|[\u4e00-\u9fff]{2,4}/g)].map(x=>x[0]);const grams=[...text].filter(c=>/[\u4e00-\u9fff]/.test(c)).flatMap((c,i,a)=>i<a.length-1?[c+a[i+1]]:[]);const result=new Set([...raw,...grams]);for(const [key,values] of Object.entries(expansions))if(text.includes(key))values.forEach(x=>result.add(x));for(const t of stopWords)result.delete(t);return [...result].filter(x=>x.length>1);};
+export function searchHeritage(query){const terms=tokens(query);return knowledge.map(d=>{const title=d.title.toLowerCase(),tags=d.tags.toLowerCase(),text=d.text.toLowerCase();let rank=0;for(const t of terms){if(title.includes(t))rank+=7+Math.min(t.length,5);if(tags.includes(t))rank+=4+Math.min(t.length,5);if(text.includes(t))rank+=1+Math.min(t.length,4);}return {...d,rank};}).filter(d=>d.rank>0).sort((a,b)=>b.rank-a.rank||a.id.localeCompare(b.id)).slice(0,5).map(({rank,...d})=>({...d,reference:sources[d.source]}));}
 export const toolDefinitions=[
  {type:'function',function:{name:'search_heritage',description:'查找有出处的狮舞历史、类型、脸谱、工艺和音乐知识。',parameters:{type:'object',properties:{query:{type:'string'}},required:['query'],additionalProperties:false}}},
  ...[['get_region','读取一种地区狮舞的介绍并提供展示入口','id',regions.map(x=>x.id)],['get_craft_step','查看制作步骤并提供工艺画面入口','id',craftSteps.map(x=>x.id)],['get_rhythm','查看本站原创教学鼓点，提供播放器入口。不能当作传统狮队实录。','id',rhythms.map(x=>x.id)]].map(([name,description,key,values])=>({type:'function',function:{name,description,parameters:{type:'object',properties:{[key]:{type:'string',enum:values}},required:[key],additionalProperties:false}}}))
@@ -38,7 +40,7 @@ const system=`你是“狮遇”的非遗多模态导览Agent。理解用户文�
 export async function runLionAgent(input,env,fetcher=fetch){
  const started=Date.now(),trace=[],initial=searchHeritage(input.question+(input.image?' 图片 狮头 流派':''));
  if(!initial.length)initial.push(...searchHeritage('狮舞'));
- const docs=new Map(initial.map(d=>[d.id,d])),actions=new Map();trace.push({tool:'search_heritage',origin:'workflow',status:'ok',detail:`已检索 ${initial.length} 条资料`});
+ const docs=new Map(initial.map(d=>[d.id,d])),actions=new Map();trace.push({tool:'plan',origin:'workflow',status:'ok',detail:input.image?'识别到图文联合请求；先观察图像，再用资料核对':'识别到文字提问；先检索非遗资料，再判断是否需要场景工具'});trace.push({tool:'search_heritage',origin:'workflow',status:'ok',detail:`中文关键词扩展与标题、标签、正文加权排序；取前 ${initial.length} 条：${initial.slice(0,3).map(d=>d.title).join('、')||'暂无命中'}`});
  try{
   if(!env.MODEL_API_KEY||!env.MODEL_BASE_URL||!env.MODEL_NAME)throw Error('CONFIG');const url=new URL(env.MODEL_BASE_URL);if(url.protocol!=='https:'||url.username||url.password||url.search||url.hash)throw Error('CONFIG');
   const model=input.image?(env.VISION_MODEL_NAME||env.MODEL_NAME):(env.LION_MODEL_NAME||env.MODEL_NAME),signal=AbortSignal.timeout(48000);
@@ -51,11 +53,11 @@ export async function runLionAgent(input,env,fetcher=fetch){
     if(round===3||m.tool_calls.length>4||count+m.tool_calls.length>8)throw Error('BUDGET');const ids=new Set();
     for(const c of m.tool_calls){if(!record(c)||c.type!=='function'||!str(c.id,100)||ids.has(c.id)||!str(c.function?.name,60)||!str(c.function?.arguments,1000))throw Error('OUTPUT');ids.add(c.id);}
     messages.push({role:'assistant',content:null,tool_calls:m.tool_calls});
-    for(const c of m.tool_calls){count++;let result;try{result=executeLionTool(c.function.name,JSON.parse(c.function.arguments));for(const d of result.documents??[])docs.set(d.id,d);if(result.action)actions.set(result.action.id,result.action);trace.push({tool:c.function.name,origin:'model',status:'ok',detail:result.action?.label||`检索 ${result.documents.length} 条资料`});}catch{result={error:'无效工具或参数；仅可使用已列出的工具及ID。'};trace.push({tool:'rejected',origin:'model',status:'rejected',detail:'无效调用已拦截'});}messages.push({role:'tool',tool_call_id:c.id,content:JSON.stringify(result)});}
+    for(const c of m.tool_calls){count++;let result;try{result=executeLionTool(c.function.name,JSON.parse(c.function.arguments));for(const d of result.documents??[])docs.set(d.id,d);if(result.action)actions.set(result.action.id,result.action);trace.push({tool:c.function.name,origin:'model',status:'ok',detail:result.action?.label||`检索并补充 ${result.documents.length} 条可引用资料`});}catch{result={error:'无效工具或参数；仅可使用已列出的工具及ID。'};trace.push({tool:'rejected',origin:'model',status:'rejected',detail:'工具名或参数未通过白名单校验，调用已拦截'});}messages.push({role:'tool',tool_call_id:c.id,content:JSON.stringify(result)});}
     continue;
    }
    if(!str(m.content,10000))throw Error('OUTPUT');let raw=m.content.trim();if(raw.startsWith('```'))raw=raw.replace(/^```(?:json)?\s*/,'').replace(/\s*```$/,'');
-   const result=validateLionOutput(JSON.parse(raw),docs,actions,!!input.image);trace.push({tool:'compose',origin:'model',status:'ok',detail:input.image?'已结合图像、提问与检索资料生成讲解':'已结合提问与检索资料生成讲解'});
+   const result=validateLionOutput(JSON.parse(raw),docs,actions,!!input.image);trace.push({tool:'validate',origin:'workflow',status:'ok',detail:'输出结构、资料引用和页面跳转均通过白名单校验；图片结论保留不确定性'});trace.push({tool:'compose',origin:'model',status:'ok',detail:input.image?'视觉模型结合图像观察、用户提问与检索资料生成讲解':'语言模型结合提问与检索资料生成讲解'});
    return {source:'ai',notice:'',...result,documents:result.citations.map(id=>docs.get(id)),trace,durationMs:Date.now()-started};
   }
   throw Error('BUDGET');
