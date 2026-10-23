@@ -13,26 +13,16 @@ const rhythms=[
  ['三拜鼓','礼仪鼓段','短促干脆 · 行礼致意','用于拜门、拜神、向观众致意等礼仪动作，节奏明快、落点清楚。'],
  ['急急风','功能鼓段','连续密鼓 · 惊险刺激','以极快的连续密鼓营造紧张气氛，多配合高桩腾跃等惊险动作。']
 ];
-const story=[
- ['起狮','开场起狮鼓','狮子睁眼、起势、拜礼，宣布表演开始。'],
- ['行狮','巡场寻青','转入行狮鼓，游走四周、嗅探寻找青物。'],
- ['遇疑','震鼓与擂鼓','面对障碍或陌生事物，鼓点表现警惕、惊疑与试探。'],
- ['见青','抛狮鼓','发现青物后，节奏转为轻快，狮子上前扒探、把玩。'],
- ['采青','锣鼓齐鸣','采青成功，锣、钹与鼓点一同推向高潮。'],
- ['收狮','平缓谢礼','鼓点渐缓，狮子吐青、谢礼、收势，完成仪式闭环。']
-];
 const emotionMarkup=['喜','怒','哀','乐','动','静','惊','疑'].map(x=>'<i>'+x+'</i>').join('');
 const instrumentMarkup=instruments.map((x,i)=>'<article class="culture-card instrument-card" tabindex="0" style="--card-order:'+i+'"><span class="culture-symbol">'+x.icon+'</span><small>'+x.role+'</small><h4>'+x.name+'</h4><p class="culture-teaser">'+x.teaser+'</p><p class="culture-detail">'+x.text+'</p><span class="hover-cue">悬停听它的分工 <b>↗</b></span></article>').join('');
 const rhythmMarkup=rhythms.map((x,i)=>'<article class="culture-card rhythm-card '+(i<3?'rhythm-foundation':'')+'" tabindex="0"><div class="rhythm-card-top"><small>0'+(i+1)+'</small><span>'+x[1]+'</span></div><h4>'+x[0]+'</h4><b>'+x[2]+'</b><p class="culture-detail">'+x[3]+'</p><span class="hover-cue">悬停了解 <b>↗</b></span></article>').join('');
-const storyMarkup=story.map((x,i)=>'<article class="score-step" tabindex="0"><span class="score-index">0'+(i+1)+'</span><span class="score-node" aria-hidden="true"></span><small>'+x[1]+'</small><h4>'+x[0]+'</h4><p>'+x[2]+'</p></article>').join('');
 export function drumCultureMarkup(){return `<section class="drum-culture" aria-labelledby="drum-culture-title">
  <div class="culture-overline"><span>THE LANGUAGE OF LION DRUMS</span><span>SCROLL · HOVER TO EXPLORE</span></div>
  <div class="culture-opening"><div><span class="culture-kicker">岭南醒狮 · 听鼓识狮</span><h2 id="drum-culture-title">锣鼓，是南派醒狮的灵魂</h2></div><p>岭南民间常说“无鼓不成狮”。醒狮没有固定台词，神态、步伐与起落都依从鼓点变化；鼓手以轻重缓急指挥全场，用鼓声讲完一段故事。</p></div>
  <div class="culture-command"><div class="command-seal">无鼓<br>不成狮</div><div class="command-copy"><span>鼓手 · 全场总指挥</span><p>一鼓令狮醒，一拍引狮行。鼓乐传递醒狮的八种神态：</p><div class="emotion-row">${emotionMarkup}</div></div><div class="command-note">鼓随狮变<br>狮随鼓动</div></div>
  <section class="culture-block" aria-labelledby="instrument-title"><div class="culture-section-title"><span>01 / THE ENSEMBLE</span><div><h3 id="instrument-title">三件乐器，一套秩序</h3><p>鼓起为先，锣钹相应；各司其职，也彼此留白。</p></div></div><div class="instrument-cards">${instrumentMarkup}</div></section>
  <section class="culture-block" aria-labelledby="rhythm-title"><div class="culture-section-title"><span>02 / RHYTHM VOCABULARY</span><div><h3 id="rhythm-title">八种鼓法，八种狮意</h3><p>三星、五星、七星构成常见基础鼓法；功能鼓段随场景转换。</p></div></div><div class="rhythm-cards">${rhythmMarkup}</div><p class="culture-footnote">佛山、南海一带流传的鼓法体系成熟，各地狮馆与村落也有本地变体，素有“各处乡村各处例”之说。</p></section>
- <section class="culture-block caiqing-block" aria-labelledby="caiqing-drum-title"><div class="culture-section-title"><span>03 / A STORY IN BEATS</span><div><h3 id="caiqing-drum-title">一段采青，鼓乐讲完一场故事</h3><p>从唤醒到谢礼，鼓点推动狮子一步步走完整套仪式。</p></div></div><div class="caiqing-score">${storyMarkup}</div></section>
- <section class="culture-closing"><div><span>04 / THE DRUMMER</span><h3>鼓手不只背鼓谱，<br>更要“眼不离狮”。</h3></div><div class="closing-copy"><p>传统狮艺中，鼓手常兼修南派武术，以四平马、子午马稳住身形。演出时观察狮头动作，临场调整节奏和力度；与狮头、狮尾长期磨合，甚至能用鼓点接住动作变化，形成无需言语的默契。</p><p>醒狮锣鼓也是祈福与传承的声音。年节、祠堂庆典、商铺开张时，鼓声寄托驱邪纳福、兴旺顺遂的愿望；这份听觉技艺随岭南华人走向东南亚与海外，成为共同的文化记忆。</p></div></section>
+ <section class="culture-closing"><div><span>03 / THE DRUMMER</span><h3>鼓手不只背鼓谱，<br>更要“眼不离狮”。</h3></div><div class="closing-copy"><p>传统狮艺中，鼓手常兼修南派武术，以四平马、子午马稳住身形。演出时观察狮头动作，临场调整节奏和力度；与狮头、狮尾长期磨合，甚至能用鼓点接住动作变化，形成无需言语的默契。</p><p>醒狮锣鼓也是祈福与传承的声音。年节、祠堂庆典、商铺开张时，鼓声寄托驱邪纳福、兴旺顺遂的愿望；这份听觉技艺随岭南华人走向东南亚与海外，成为共同的文化记忆。</p></div></section>
  <p class="culture-ending">鼓声落下，狮意仍在。<span>END OF THE RHYTHM</span></p>
  </section>`}
-export function initDrumCulture(){const items=document.querySelectorAll('.instrument-card,.rhythm-card,.score-step');if(!items.length)return;if(!('IntersectionObserver'in window)){items.forEach(x=>x.classList.add('in-view'));return;}const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in-view');observer.unobserve(entry.target);}}),{threshold:.12});items.forEach(x=>observer.observe(x));}
+export function initDrumCulture(){const items=document.querySelectorAll('.instrument-card,.rhythm-card');if(!items.length)return;if(!('IntersectionObserver'in window)){items.forEach(x=>x.classList.add('in-view'));return;}const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in-view');observer.unobserve(entry.target);}}),{threshold:.12});items.forEach(x=>observer.observe(x));}
