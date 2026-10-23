@@ -23,14 +23,6 @@ export const craftSteps=[
  {id:'paint',word:'写',name:'落笔传神',material:'颜料 · 纹饰',detail:'在成形的表面绘饰，组织眉眼、鼻纹与面部装饰。部分传统狮头借鉴戏曲人物脸谱。',tip:'选择配色，创作你的数字狮头。'},
  {id:'finish',word:'装',name:'装饰成狮',material:'毛饰 · 镜饰 · 活动部件',detail:'装配须眉、毛饰和相关部件，使狮头具有完整外观。图中的分层是教学示意，不代表所有作坊的统一步骤。',tip:'完成四道工序，保存你的狮头图。'}
 ];
-export const ritualSteps=[
- {id:'seek',name:'寻青',motion:'walk',text:'狮子进入场景，寻找“青”的位置。',hint:'随着节拍，缓缓向前。'},
- {id:'see',name:'见青',motion:'look',text:'发现目标，以抬头、凝视表现好奇。',hint:'让狮子抬头，看见前方的青。'},
- {id:'probe',name:'探青',motion:'shake',text:'试探周围环境，展现疑、惊、喜等神态。',hint:'轻摇狮头，观察再靠近。'},
- {id:'take',name:'采青',motion:'jump',text:'接近并采下“青”，形成表演的高潮。',hint:'按下采青，让狮子跃起。'},
- {id:'eat',name:'食青',motion:'mouth',text:'以口部动作表现食青，延续表演情节。',hint:'开合狮口，演出食青的神态。'},
- {id:'offer',name:'吐青',motion:'bow',text:'吐青并向观众致意，传递祈福意愿。',hint:'低头行礼，完成这一段体验。'}
-];
 // Original learning rhythms: not attributed to a traditional troupe or lineage.
 export const rhythms=[
  {id:'explore',name:'探寻',label:'舒缓 · 80 BPM',bpm:80,mood:'留出停顿，听清每次落点。',beats:['D','','','C','','','D','','G','','','C','','','',''],motion:'look'},
