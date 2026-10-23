@@ -122,3 +122,64 @@ body.drums-active .drum-heading{margin-bottom:12px}
  .stage-drum{left:31%;top:51%;width:68%;height:83%}
  .stage-lion{left:73%;bottom:3%;width:min(52%,300px)}
 }
+/* Drum culture reading experience */
+.drum-culture{max-width:1220px;margin:clamp(74px,10vw,132px) auto 30px;padding:0 0 24px;color:#efe5d3}
+.culture-overline{display:flex;justify-content:space-between;border-top:1px solid #7b633b;padding:15px 0;color:#aa8d5a;font-size:9px;letter-spacing:.17em}
+.culture-opening{display:grid;grid-template-columns:1.05fr .95fr;gap:7%;align-items:end;padding:32px 0 35px}
+.culture-kicker,.culture-section-title>span,.culture-closing>div:first-child>span{color:#c5a160;font-size:9px;letter-spacing:.16em}
+.culture-opening h2{font-size:clamp(34px,4vw,58px);line-height:1.25;letter-spacing:.03em;margin:13px 0 0;color:#f4ead7}
+.culture-opening>p{max-width:530px;color:#b7aa96;font-size:14px;line-height:2.1;padding-bottom:5px}
+.culture-command{display:grid;grid-template-columns:92px 1fr 170px;gap:25px;align-items:center;padding:25px 34px;background:linear-gradient(110deg,#411a13,#21120d 58%,#17110d);border:1px solid #79522555;position:relative;overflow:hidden}
+.culture-command:after{content:"";position:absolute;right:9%;top:-120px;width:300px;height:300px;border:1px solid #c59b4922;border-radius:50%;box-shadow:0 0 0 32px #c59b4908,0 0 0 66px #c59b4905;pointer-events:none}
+.command-seal{width:78px;height:78px;border:1px solid #c6a260;color:#e4c985;display:grid;place-content:center;text-align:center;font:18px/1.4 STSong,serif;transform:rotate(-5deg)}
+.command-copy>span{font-size:11px;color:#d8b96e;letter-spacing:.12em}
+.command-copy>p{margin:8px 0 11px;font-size:12px;color:#c6b8a3}
+.emotion-row{display:flex;gap:8px}.emotion-row i{font-style:normal;font-size:10px;width:23px;height:23px;display:grid;place-items:center;border:1px solid #ad8a4e66;border-radius:50%;color:#edcf87}
+.command-note{text-align:right;font:20px/1.7 STSong,serif;color:#e5c578;letter-spacing:.12em}
+.culture-block{margin-top:78px}
+.culture-section-title{display:flex;align-items:flex-start;gap:34px;margin-bottom:22px}
+.culture-section-title>span{min-width:180px;padding-top:8px}
+.culture-section-title h3,.culture-closing h3{font:clamp(24px,3vw,34px)/1.4 STSong,"Songti SC",serif;color:#f1e7d5}
+.culture-section-title p{margin-top:5px;font-size:12px;color:#938675}
+.instrument-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}
+.culture-card{position:relative;background:linear-gradient(145deg,#17130f,#0d0c0a);border:1px solid #4a3b28;padding:24px 24px 21px;transition:border-color .25s,background .25s,transform .25s,box-shadow .25s;outline:none}
+.culture-card:hover,.culture-card:focus-visible{z-index:2;border-color:#b38b4a;background:linear-gradient(145deg,#241911,#110e0b);transform:translateY(-4px);box-shadow:0 18px 38px #0006}
+.culture-symbol{display:grid;place-items:center;width:50px;height:50px;border:1px solid #b28c4b66;border-radius:50%;font:24px STSong,serif;color:#e7c77f;margin-bottom:18px;background:#8c552012}
+.instrument-card>small{font-size:9px;letter-spacing:.11em;color:#bd9b5d}
+.instrument-card h4,.rhythm-card h4{font:24px STSong,"Songti SC",serif;color:#f2e5cf;margin:9px 0}
+.culture-teaser{font-size:12px;color:#b2a48f;line-height:1.8}
+.culture-detail{max-height:0;opacity:0;overflow:hidden;margin:0;color:#d0c0a7;font-size:12px;line-height:1.95;transition:max-height .35s ease,opacity .25s ease,margin .25s ease}
+.culture-card:hover .culture-detail,.culture-card:focus-visible .culture-detail{max-height:220px;opacity:1;margin-top:12px}
+.hover-cue{display:flex;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px solid #ffffff12;color:#8e7d64;font-size:9px;letter-spacing:.07em}
+.hover-cue b{color:#d4ae66;font-size:14px;font-weight:400}
+.rhythm-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch}
+.rhythm-card{min-height:185px;padding:19px 18px 15px}
+.rhythm-card.rhythm-foundation{background:linear-gradient(150deg,#2b1b12,#120e0a);border-color:#8b693b88}
+.rhythm-card-top{display:flex;justify-content:space-between;align-items:center}
+.rhythm-card-top small{font:italic 15px Georgia,serif;color:#d1ab65}
+.rhythm-card-top span{font-size:9px;color:#927d5e}
+.rhythm-card h4{font-size:21px;margin:15px 0 6px}
+.rhythm-card>b{font-size:10px;color:#c2a267;font-weight:400}
+.rhythm-card .culture-detail{font-size:11px}
+.culture-footnote{padding:15px 0;border-bottom:1px solid #392f23;color:#8e8271;font-size:10px;line-height:1.8}
+.caiqing-block{padding:1px 0}
+.caiqing-score{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;padding-top:5px}
+.caiqing-score:before{content:"";position:absolute;top:22px;left:8%;right:8%;height:1px;background:linear-gradient(90deg,#9d2722,#c7a566,#9d2722);opacity:.6}
+.score-step{position:relative;padding:0 14px 13px;outline:none;transition:transform .25s,opacity .5s}
+.score-node{position:relative;z-index:1;display:block;width:11px;height:11px;margin:12px 0 19px;border:1px solid #e5c878;border-radius:50%;background:#18110d;box-shadow:0 0 0 5px #c7a56617;transition:background .2s,box-shadow .2s}
+.score-step:hover,.score-step:focus-visible{transform:translateY(-5px)}
+.score-step:hover .score-node,.score-step:focus-visible .score-node{background:#e4c16e;box-shadow:0 0 0 8px #c7a56620,0 0 18px #e4c16e}
+.score-step>small{font-size:9px;color:#b89657;letter-spacing:.06em}
+.score-step h4{font:21px STSong,serif;color:#efe2ca;margin:7px 0}
+.score-step p{font-size:10px;line-height:1.85;color:#9e907e}
+.culture-closing{display:grid;grid-template-columns:.8fr 1.2fr;gap:8%;padding:30px 34px;margin-top:76px;border:1px solid #55442e;background:linear-gradient(110deg,#20150f,#100e0b)}
+.culture-closing h3{margin-top:13px}
+.closing-copy p{font-size:12px;line-height:2;color:#b5a690;margin:0 0 12px}
+.culture-ending{display:flex;justify-content:space-between;align-items:center;padding:30px 0 10px;color:#d5b76f;font:19px STSong,serif}
+.culture-ending span{font:9px Arial,sans-serif;color:#75664f;letter-spacing:.16em}
+.instrument-card,.rhythm-card,.score-step{opacity:0;transform:translateY(16px)}
+.instrument-card.in-view,.rhythm-card.in-view,.score-step.in-view{opacity:1;transform:translateY(0)}
+.instrument-card.in-view{transition-delay:calc(var(--card-order,0)*80ms)}
+@media(max-width:900px){.drum-culture{padding-left:18px;padding-right:18px}.culture-section-title>span{min-width:150px}.rhythm-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.caiqing-score{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:20px}.caiqing-score:before{display:none}.score-step{border-top:1px solid #70593666;padding-top:7px}.score-node{margin-top:4px}}
+@media(max-width:620px){.drum-culture{margin-top:68px;padding:0 0 10px}.culture-overline{font-size:7px;letter-spacing:.1em}.culture-opening{grid-template-columns:1fr;gap:14px;padding:25px 0}.culture-opening h2{font-size:35px}.culture-opening>p{font-size:12px}.culture-command{grid-template-columns:58px 1fr;gap:15px;padding:18px 16px}.command-seal{width:55px;height:55px;font-size:14px}.command-note{display:none}.command-copy>p{font-size:10px}.emotion-row{gap:5px}.emotion-row i{width:20px;height:20px;font-size:9px}.culture-block{margin-top:54px}.culture-section-title{display:block;margin-bottom:17px}.culture-section-title>span{display:block;margin-bottom:9px}.culture-section-title h3{font-size:25px}.culture-section-title p{font-size:10px}.instrument-cards{grid-template-columns:1fr}.culture-card{padding:19px}.culture-detail{max-height:none;opacity:1;margin-top:11px}.hover-cue{margin-top:12px}.rhythm-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.rhythm-card{min-height:0;padding:15px 12px}.rhythm-card h4{font-size:19px}.rhythm-card .culture-detail{font-size:10px}.caiqing-score{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:12px}.score-step{padding-left:10px;padding-right:9px}.score-step h4{font-size:18px}.score-step p{font-size:10px}.culture-closing{grid-template-columns:1fr;gap:16px;padding:23px 19px;margin-top:52px}.culture-closing h3{font-size:25px}.closing-copy p{font-size:11px}.culture-ending{font-size:16px}.culture-ending span{font-size:7px}}
+@media(prefers-reduced-motion:reduce){.instrument-card,.rhythm-card,.score-step,.culture-card{transition:none!important;animation:none!important;opacity:1!important;transform:none!important;scroll-behavior:auto!important}}
