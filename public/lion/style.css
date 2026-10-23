@@ -241,6 +241,14 @@ body.agent-active footer em{color:#d1ac63}
 .agent-console .feature-tags span{background:#352719;color:#e1c47d;border:1px solid #67502c}
 .agent-console .secondary{border-color:#806239;color:#dfc27e;background:#1a140e}
 .agent-console .secondary:hover{background:#352718}
+.agent-console .voice-button{min-height:40px;padding:10px 13px;border:1px solid #806239;border-radius:2px;background:#1a140e;color:#dfc27e;font-size:10px;white-space:nowrap;transition:.2s}
+.agent-console .voice-button:hover,.agent-console .voice-button:focus-visible{border-color:#d1ad68;background:#352718}
+.agent-console .voice-button:disabled{opacity:.5}
+.agent-console .result-details ol{display:grid;gap:9px;padding-left:21px}
+.agent-console .result-details li{padding-left:3px;color:#d1ad68}
+.agent-console .result-details li b{display:block;color:#dfc27e;font-size:10px;font-weight:500}
+.agent-console .result-details li span{display:block;margin-top:3px;font-size:10px;line-height:1.7}
+.agent-console .audit-note{margin:12px 0 0;color:#827865;font-size:9px;line-height:1.7}
 .agent-console .work-note{width:min(980px,100%);align-self:center;border-color:#493a28}
 .agent-console .work-note summary{color:#c5ad7a}
 .agent-console .agent-loading{justify-content:center;color:#d2ad62}
