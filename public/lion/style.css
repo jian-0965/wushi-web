@@ -255,3 +255,19 @@ body.agent-active .error{color:#ff9c82;background:#3a1712;border-color:#7e3326}
 .jack-title span{background:linear-gradient(180deg,#d2c7a6 0%,#9b927b 72%,#6e6d6c 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 @media(max-width:900px){.jack-title{font-size:12.8vw;letter-spacing:.06em}}
 @media(max-width:600px){.jack-title{font-size:13vw;letter-spacing:.035em}}
+
+/* The opening page now shares the same masthead and five-item navigation as every section. */
+body.home-active .home-header{position:relative;inset:auto;z-index:20;height:auto;background:#050505;border-bottom:1px solid #25211a}
+body.home-active .home-header .masthead{max-width:none;height:88px;padding:0 5.5vw}
+body.home-active .home-header .brand strong{color:#f0e6d4}
+body.home-active .home-header .brand small{color:#9c927e}
+body.home-active .home-header .masthead>p{color:#887e6d}
+body.home-active .home-header .agent-shortcut{color:#dfc27e}
+body.home-active .home-header .agent-shortcut i{background:#cba95f;box-shadow:0 0 9px #d2a64e}
+body.home-active .home-header nav{max-width:none;height:62px;padding:0 5.5vw;gap:0;border-top:1px solid #211e19}
+body.home-active .home-header nav button{height:62px;color:#d6cbb8}
+body.home-active .home-header nav button[aria-current]{color:#e4c473}
+body.home-active .home-header nav button[aria-current]:after{height:2px;background:linear-gradient(90deg,#9d2722,#d7b65e)}
+body.home-active .home-header .nav-no{color:#8c806c}
+.jack-hero{height:calc(100svh - 150px);min-height:560px}
+@media(max-width:760px){body.home-active .home-header .masthead{height:72px;padding:0 20px}body.home-active .home-header nav{height:50px;padding:0 18px;gap:18px}body.home-active .home-header nav button{height:50px;font-size:10px;flex:0 0 auto}.jack-hero{height:calc(100svh - 122px);min-height:520px}}
