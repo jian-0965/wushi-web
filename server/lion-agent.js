@@ -69,13 +69,13 @@ export async function runLionAgent(input,env,fetcher=fetch){
 const buckets=new Map();
 export async function handleLionAPI(request,env={},fetcher=fetch){
  const url=new URL(request.url);if(!url.pathname.startsWith('/api/lion-agent'))return null;
- if(url.pathname==='/api/lion-agent/status'&&request.method==='GET')return out({configured:!!(env.MODEL_API_KEY&&env.MODEL_BASE_URL&&env.MODEL_NAME),signedIn:!!request.headers.get('oai-authenticated-user-id')});
+ if(url.pathname==='/api/lion-agent/status'&&request.method==='GET')return out({configured:!!(env.MODEL_API_KEY&&env.MODEL_BASE_URL&&env.MODEL_NAME)});
  if(url.pathname!=='/api/lion-agent')return out({message:'接口不存在。'},404);
  if(request.method!=='POST')return out({message:'请使用POST请求。'},405);
- const identity=request.headers.get('oai-authenticated-user-id');if(!identity)return out({message:'请登录站点后使用 AI 导览；其余展览和互动可以直接体验。'},401);
  if(request.headers.get('origin')&&request.headers.get('origin')!==url.origin)return out({message:'请求来源不正确。'},403);
  if(!request.headers.get('content-type')?.includes('application/json'))return out({message:'请求格式不正确。'},415);
- const now=Date.now(),times=(buckets.get(identity)||[]).filter(x=>now-x<60000);if(times.length>=6)return out({message:'请求较频繁，请一分钟后重试。'},429);for(const [key,v] of buckets)if(now-v.at(-1)>60000)buckets.delete(key);if(buckets.size>4000)return out({message:'服务繁忙，请稍后重试。'},429);buckets.set(identity,[...times,now]);
+ const identity='ip:'+(request.headers.get('cf-connecting-ip')?.trim().slice(0,64)||'local-anonymous');
+ const now=Date.now(),times=(buckets.get(identity)||[]).filter(x=>now-x<60000);if(times.length>=12)return out({message:'当前网络请求较频繁，请一分钟后再试。'},429);for(const [key,v] of buckets)if(now-v.at(-1)>60000)buckets.delete(key);if(buckets.size>4000)return out({message:'服务繁忙，请稍后重试。'},429);buckets.set(identity,[...times,now]);
  let value;try{const reader=request.body?.getReader();if(!reader)throw Error();let bytes=0,text='';const dec=new TextDecoder();try{while(true){const {value,done}=await reader.read();if(done)break;bytes+=value.byteLength;if(bytes>1700000){await reader.cancel();throw Error();}text+=dec.decode(value,{stream:true});}}finally{reader.releaseLock();}text+=dec.decode();value=validateLionInput(JSON.parse(text));}catch{return out({message:'请检查文字或图片：文字不超过1600字，图片需为有效JPG、PNG或WebP。'},400);}
  return out(await runLionAgent(value,env,fetcher));
 }
