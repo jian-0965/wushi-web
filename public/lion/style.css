@@ -248,6 +248,35 @@ body.agent-active footer em{color:#d1ac63}
 .agent-console .voice-button{min-height:40px;padding:10px 13px;border:1px solid #806239;border-radius:2px;background:#1a140e;color:#dfc27e;font-size:10px;white-space:nowrap;transition:.2s}
 .agent-console .voice-button:hover,.agent-console .voice-button:focus-visible{border-color:#d1ad68;background:#352718}
 .agent-console .voice-button:disabled{opacity:.5}
+.agent-mode-actions{display:flex;gap:16px;margin-top:12px}
+.agent-mode-actions .text-button{color:#d6b66e;font-size:10px}
+.image-creator-console{min-height:640px}
+.lion-image-studio{display:grid;grid-template-columns:minmax(300px,.82fr) minmax(0,1.18fr);gap:26px;flex:1;min-height:520px;padding:28px 0}
+.lion-image-form{display:flex;flex-direction:column;align-items:stretch;min-width:0;padding:19px 20px;border:1px solid #493a28;background:linear-gradient(145deg,#1c1711,#100e0b)}
+.lion-image-form>label{margin-bottom:12px;color:#efe3cf;font:20px STSong,"Songti SC",serif}
+.lion-image-form textarea{min-height:155px;max-height:220px;padding:14px;border:1px solid #55452f;background:#0e0c09;color:#eee4d2;font-size:12px;line-height:1.85;resize:vertical}
+.lion-image-form textarea:focus{border-color:#c2a15e;outline:none;box-shadow:0 0 0 2px #c2a15e20}
+.lion-image-form textarea::placeholder{color:#756d60}
+.image-prompt-meta{display:flex;justify-content:space-between;gap:10px;margin-top:7px;color:#827865;font-size:8px}
+.image-prompt-meta small{font-size:8px}
+.image-preset-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:20px 0 12px}
+.image-preset-row>span{width:100%;margin-bottom:3px;color:#b99a60;font-size:9px}
+.image-preset-row button{padding:7px 9px;border:1px solid #59472d;background:#17120c;color:#c5ad7a;font-size:9px}
+.image-preset-row button:hover{border-color:#c5a35f;background:#2a2013}
+.image-cost-note{margin:7px 0 16px;color:#887d6b;font-size:9px;line-height:1.8}
+.lion-image-form>.primary{min-height:44px;margin-top:auto;border:1px solid #a72225;background:#a72225;color:#fff4df;font-size:11px}
+.lion-image-form>.primary:hover{background:#c0312e}
+.lion-image-preview{position:relative;display:grid;place-items:center;min-height:420px;overflow:hidden;border:1px solid #55452f;background:radial-gradient(ellipse at 50% 42%,#382419 0,#17110d 48%,#0a0908 100%)}
+.lion-image-preview:before{content:"";position:absolute;inset:20px;border:1px solid #d5b66b12;pointer-events:none}
+.image-placeholder,.image-generating{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px;text-align:center}
+.image-placeholder .agent-orbit{margin:0 0 8px}
+.image-placeholder b,.image-generating b{color:#e8d7b8;font:17px STSong,"Songti SC",serif;font-weight:400}
+.image-placeholder small,.image-generating small{color:#968671;font-size:9px}
+.image-generating .spinner{width:33px;height:33px;margin-bottom:8px;border-color:#574326;border-top-color:#e3bf69}
+.generated-art{position:absolute;inset:17px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px}
+.generated-art img{display:block;width:100%;height:calc(100% - 54px);object-fit:contain;filter:drop-shadow(0 15px 32px #0008)}
+.generated-art>div{width:100%;display:flex;justify-content:space-between;align-items:center;color:#bba36f;font-size:9px}
+.generated-art .secondary{padding:8px 12px;font-size:9px}
 .agent-console .result-details ol{display:grid;gap:9px;padding-left:21px}
 .agent-console .result-details li{padding-left:3px;color:#d1ad68}
 .agent-console .result-details li b{display:block;color:#dfc27e;font-size:10px;font-weight:500}
@@ -260,7 +289,7 @@ body.agent-active footer em{color:#d1ac63}
 .agent-note{width:min(980px,100%);align-self:center;margin-top:11px;color:#827865;font-size:9px}
 body.agent-active .quiet-note a{color:#e1bd6c}
 body.agent-active .error{color:#ff9c82;background:#3a1712;border-color:#7e3326}
-@media(max-width:760px){body.agent-active main{padding:0 17px 25px}.agent-experience{min-height:calc(100vh - 190px);padding-top:20px}.agent-heading{margin-bottom:13px}.agent-heading h1{font-size:31px}.agent-heading>p{font-size:10px}.agent-console{min-height:max(570px,calc(100vh - 285px));padding:0 14px 13px}.agent-console-top{height:49px}.agent-console-top>span{font-size:10px}.agent-console-top>small{font-size:8px}.agent-stage{min-height:330px;padding:15px 0}.agent-orbit{width:53px;height:53px;font-size:25px}.agent-welcome>p{font-size:10px;margin-bottom:17px}.agent-console .prompt-chips{grid-template-columns:1fr;gap:7px}.agent-console .prompt-chips button{min-height:42px;padding:10px 12px;font-size:10px}.agent-console .composer{padding:14px}.agent-console textarea{min-height:90px;font-size:13px}.agent-console .composer-bottom{gap:8px;flex-wrap:wrap}.agent-console .composer-tip{font-size:8px}.agent-console .primary{padding:11px 16px}.agent-console .agent-result{max-height:44vh;padding:16px}.agent-console .result-top{display:block}.agent-console .result-top>div{margin-top:7px}.agent-console .audit-grid{grid-template-columns:1fr}.agent-note{line-height:1.6}}
+@media(max-width:760px){body.agent-active main{padding:0 17px 25px}.agent-experience{min-height:calc(100vh - 190px);padding-top:20px}.agent-heading{margin-bottom:13px}.agent-heading h1{font-size:31px}.agent-heading>p{font-size:10px}.agent-console{min-height:max(570px,calc(100vh - 285px));padding:0 14px 13px}.agent-console-top{height:49px}.agent-console-top>span{font-size:10px}.agent-console-top>small{font-size:8px}.agent-stage{min-height:330px;padding:15px 0}.agent-orbit{width:53px;height:53px;font-size:25px}.agent-welcome>p{font-size:10px;margin-bottom:17px}.agent-console .prompt-chips{grid-template-columns:1fr;gap:7px}.agent-console .prompt-chips button{min-height:42px;padding:10px 12px;font-size:10px}.agent-console .composer{padding:14px}.agent-console textarea{min-height:90px;font-size:13px}.agent-console .composer-bottom{gap:8px;flex-wrap:wrap}.agent-console .composer-tip{font-size:8px}.agent-console .primary{padding:11px 16px}.agent-console .agent-result{max-height:44vh;padding:16px}.agent-console .result-top{display:block}.agent-console .result-top>div{margin-top:7px}.agent-console .audit-grid{grid-template-columns:1fr}.image-creator-console{min-height:0}.lion-image-studio{grid-template-columns:1fr;gap:13px;min-height:0;padding:14px 0}.lion-image-form{padding:15px}.lion-image-preview{min-height:360px}.generated-art{inset:10px}.agent-note{line-height:1.6}}
 
 /* Four-character Chinese title on the opening hero. */
 .jack-title{font:700 clamp(84px,13.5vw,232px)/.9 "Noto Serif SC","Songti SC",STSong,SimSun,serif;letter-spacing:.08em;color:#b5a982;text-shadow:0 2px 0 #d2c6a5,0 16px 50px #000a}
