@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="沿着扎、扑、写、装四道工序，走进一只醒狮狮头的制作过程。">
+  <title>一只狮头的诞生 · 狮遇</title>
+  <style>
+    :root,.sw-root{--sw-bg:#100c0a;--sw-ink:#f5efe3;--sw-ink-soft:#c2b5a4;--sw-accent:#c8a568;--sw-font-display:"Noto Serif SC","Songti SC",STSong,serif;--sw-font-body:Arial,"PingFang SC","Microsoft YaHei",sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:#100c0a;color:#f5efe3;font-family:Arial,"PingFang SC","Microsoft YaHei",sans-serif}
+    #world .sw-topbar,#world .sw-copylayer,#world .sw-route{display:none}
+    #world .sw-stage{background:#100c0a}
+    #world .sw-scene__video,#world .sw-scene__still{object-fit:contain;object-position:center center}
+    #world .sw-sky{background:#100c0a}
+    #world .sw-hint{bottom:100px;color:#d7c7aa;font-size:10px;letter-spacing:.22em;text-shadow:0 2px 8px #000}
+    .film-head{position:fixed;inset:0 0 auto;z-index:70;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px clamp(22px,4.8vw,72px);background:linear-gradient(180deg,#100c0aee,transparent)}
+    .film-head>a{color:#f5efe3;text-decoration:none;font-size:12px;letter-spacing:.12em;white-space:nowrap}
+    .film-head>a:hover,.film-steps button:hover{color:#e4c080}
+    .film-brand{display:flex;align-items:center;gap:13px}
+    .film-brand i{width:31px;height:31px;display:grid;place-items:center;border:1px solid #c8a568;color:#c8a568;font:20px "Songti SC",serif;font-style:normal}
+    .film-brand b{font:normal 20px "Noto Serif SC","Songti SC",serif;letter-spacing:.18em}
+    .film-title{position:fixed;top:82px;left:clamp(22px,4.8vw,72px);z-index:70;color:#e1c795;font-size:11px;letter-spacing:.28em;text-shadow:0 2px 12px #000}
+    .film-bottom{position:fixed;inset:auto 0 0;z-index:70;padding:50px clamp(22px,4.8vw,72px) 24px;background:linear-gradient(0deg,#100c0af5 0%,#100c0acc 47%,transparent)}
+    .film-bottom-inner{display:flex;align-items:end;justify-content:space-between;gap:32px;max-width:1440px;margin:auto}
+    .film-current{min-width:260px}.film-current small{display:block;color:#c8a568;font-size:10px;letter-spacing:.24em}.film-current h1{margin:8px 0 5px;font:normal clamp(23px,2.7vw,36px) "Noto Serif SC","Songti SC",serif;letter-spacing:.05em}.film-current p{margin:0;color:#bfb3a3;font-size:12px;line-height:1.7}
+    .film-steps{display:flex;gap:clamp(10px,1.8vw,28px);align-items:center;padding-bottom:6px}
+    .film-steps button{border:0;border-top:1px solid #77634d;background:transparent;color:#aa9a85;padding:12px 2px 0;min-width:72px;cursor:pointer;text-align:left;font:normal 12px Arial,"PingFang SC",sans-serif;transition:color .2s,border-color .2s}
+    .film-steps button[aria-current="step"]{border-color:#c8a568;color:#f4ddae}.film-steps b{display:block;margin-bottom:3px;font:normal 21px "Noto Serif SC","Songti SC",serif}
+    .film-note{max-width:1440px;margin:14px auto 0;color:#8d8276;font-size:10px;line-height:1.5}
+    .film-note a{color:#bda578}
+    @media(max-width:720px){.film-head{padding:16px 18px}.film-title{top:66px;left:18px}.film-bottom{padding:40px 18px 18px}.film-bottom-inner{display:block}.film-current{min-width:0}.film-current h1{font-size:25px}.film-current p{font-size:11px}.film-steps{justify-content:space-between;margin-top:17px}.film-steps button{min-width:0;flex:1;font-size:10px}.film-steps b{font-size:17px}.film-note{font-size:9px}#world .sw-scene__video,#world .sw-scene__still{object-fit:cover}}
+    @media(prefers-reduced-motion:reduce){#world .sw-hint{display:none}}
+  </style>
+</head>
+<body>
+  <div id="world"></div>
+  <div class="film-head">
+    <a class="film-brand" href="/#craft" aria-label="返回狮遇制作工艺"><i>狮</i><b>狮遇</b></a>
+    <a href="/#craft">← 返回制作工艺</a>
+  </div>
+  <div class="film-title">LION HEAD CRAFT · 匠作影像</div>
+  <div class="film-bottom">
+    <div class="film-bottom-inner">
+      <div class="film-current" aria-live="polite"><small id="film-count">01 / 04 · 扎</small><h1 id="film-stage">竹篾立骨</h1><p id="film-description">弯篾、交织、捆扎，狮头从骨架起形。</p></div>
+      <nav class="film-steps" aria-label="跳转制作工序">
+        <button type="button" data-time="0" aria-current="step"><b>扎</b>竹篾立骨</button>
+        <button type="button" data-time="4.3"><b>扑</b>裱纸成形</button>
+        <button type="button" data-time="8"><b>写</b>落笔传神</button>
+        <button type="button" data-time="10"><b>装</b>饰件归位</button>
+      </nav>
+    </div>
+    <p class="film-note">AI 影像演绎，用于展示工序氛围；具体制作细节以传承人技艺与资料为准。<a href="/lion/assets/craft/lingnan-craft-film.mp4" target="_blank" rel="noopener">直接播放影片 ↗</a></p>
+  </div>
+  <script src="/lion/scroll-world-engine.js"></script>
+  <script>
+    const duration=15.072,travel=3.4,beats=[
+      {t:0,word:'扎',name:'竹篾立骨',description:'弯篾、交织、捆扎，狮头从骨架起形。'},
+      {t:4.3,word:'扑',name:'裱纸成形',description:'纸胚覆盖竹骨，狮头渐渐有了轮廓。'},
+      {t:8,word:'写',name:'落笔传神',description:'朱红、石青与金色，在眉眼间写出神气。'},
+      {t:10,word:'装',name:'饰件归位',description:'绒毛、额镜和五官归位，一只醒狮初成。'}
+    ];
+    mountScrollWorld(document.getElementById('world'),{
+      hint:'向下滚动 · 走进工坊',nav:false,atmosphere:false,diveScroll:travel,connectors:[],
+      sections:[{id:'craft',label:'一只狮头的诞生',still:'/lion/assets/craft/lingnan-craft-poster.webp',clip:'/lion/assets/craft/lingnan-craft-film.mp4',accent:'#c8a568',scroll:travel}]
+    });
+    const count=document.getElementById('film-count'),title=document.getElementById('film-stage'),description=document.getElementById('film-description'),buttons=[...document.querySelectorAll('.film-steps button')];
+    function updateStage(){
+      const time=Math.min(duration,Math.max(0,scrollY/(travel*innerHeight)*duration));
+      let index=0;for(let i=1;i<beats.length;i++)if(time>=beats[i].t)index=i;
+      const item=beats[index];count.textContent=`${String(index+1).padStart(2,'0')} / 04 · ${item.word}`;title.textContent=item.name;description.textContent=item.description;
+      buttons.forEach((button,i)=>{if(i===index)button.setAttribute('aria-current','step');else button.removeAttribute('aria-current')});
+    }
+    addEventListener('scroll',updateStage,{passive:true});addEventListener('resize',updateStage);
+    buttons.forEach(button=>button.addEventListener('click',()=>scrollTo({top:Number(button.dataset.time)/duration*travel*innerHeight,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})));
+    updateStage();
+  </script>
+</body>
+</html>

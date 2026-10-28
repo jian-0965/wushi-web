@@ -10,6 +10,6 @@
     "dev": "node --watch server.js",
     "start": "node server.js",
     "test": "node --test tests/lion.test.mjs",
-    "check": "node --check server.js && node --check server/lion-agent.js && node --check public/lion/main.js"
+    "check": "node --check server.js && node --check server/lion-agent.js && for file in public/lion/*.js; do node --check \"$file\" || exit 1; done"
   }
 }

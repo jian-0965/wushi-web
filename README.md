@@ -1,74 +1,69 @@
-# 狮遇 · 非遗舞狮多模态互动馆
+# 狮遇 · 中国舞狮互动馆
 
-一个围绕中国狮舞非遗文化设计的 Web 互动作品。网站使用顶部横向导航，下方切换完整体验画面，把文化展示、工艺体验、声音交互、流程动画和多模态 AI 导览连接起来。
+围绕中国舞狮的文化展示与互动体验。当前页面包括作品说明、历史与各地流派、狮头制作、鼓点互动，以及支持文字、图片和语音转文字的 AI 导览。制作工艺下方还有实时绘制的 3D 工坊与可滚动观看的工艺影像。
 
-## 主要功能
-
-- 作品说明：介绍创作目标、内容边界和资料来源。
-- 历史简介：用时间线呈现狮舞的历史与当代传承。
-- 地区狮舞：展示佛山醒狮、鹤山狮、徐水舞狮、揭阳青狮和藤县狮舞的造型示意与特征。
-- 制作工艺：体验“扎、扑、写、装”四道狮头工序，支持裱糊进度、配色和 SVG 保存。
-- 舞狮互动：点击或使用键盘控制抬头、摇头、开口、行礼、跃起和迈步。
-- 鼓点播放器：提供三套原创合成教学节奏，支持播放、调速、音量、循环、敲击练习、评分和 WAV 导出。
-- 采青流程：用连续动画展示寻青、见青、探青、采青、食青和吐青六个教学环节。
-- 多模态 Agent：支持文字提问和狮头图片上传，检索非遗资料并调用地区、工艺、鼓点和采青工具。
-
-## 技术实现
-
-- 前端：原生 HTML、CSS、JavaScript 与原创 SVG。
-- 音频：Web Audio API 实时合成鼓、锣、钹，并使用 OfflineAudioContext 导出 WAV。
-- 服务端：Vinext、Cloudflare Workers 兼容入口。
-- AI：OpenAI 兼容 Chat Completions 接口、图文输入、Function Calling、检索增强和结构化输出校验。
-- 数据：浏览器 localStorage 保存体验进度与节奏练习结果，不保存上传图片。
-
-多模态 Agent 使用以下服务端环境变量，密钥不能写入前端或提交到仓库：
-
-```text
-MODEL_API_KEY=
-MODEL_BASE_URL=
-MODEL_NAME=
-VISION_MODEL_NAME=   # 可选，未设置时使用 MODEL_NAME
-```
+本仓库只包含舞狮项目。网页入口是 `public/index.html`，本地服务由 `server.js` 提供；无需安装第三方 npm 包。
 
 ## 本地运行
 
-要求 Node.js 22.13 或更高版本。
+需要 Node.js 22.13 或更新版本。
 
 ```bash
-npm ci
 npm run dev
 ```
 
-生产构建和测试：
+打开 <http://localhost:3000>。也可用 `npm start` 启动不带文件监听的服务。检查代码与测试：
 
 ```bash
+npm run check
 npm test
-npm run build
 ```
 
-## 关键目录
+仓库没有 `build` 脚本，也没有需要执行的 `npm ci` 步骤。
+
+## 目录
 
 ```text
-public/index.html          页面入口
-public/lion/main.js        八个栏目与前端交互
-public/lion/style.css      视觉与响应式布局
-public/lion/art.js         狮头、狮身与鼓的原创 SVG
-public/lion/audio.js       节奏播放、打击乐与评分
-public/lion/data.js        地区、工艺、采青、鼓点和检索资料
-server/lion-agent.js       多模态 Agent、工具调用与安全校验
-build/sites-worker.ts      Worker 请求入口
-tests/lion.test.mjs        Agent、图片、工具和节奏测试
+public/index.html                    网页入口
+public/lion/main.js                 页面与交互
+public/lion/style.css               页面样式
+public/lion/data.js                 文案、流派、资料与节奏数据
+public/lion/art.js                  交互用 SVG 示意
+public/lion/audio.js                鼓、锣、钹的浏览器合成音
+public/lion/culture.js              鼓乐文化介绍
+public/lion/gallery.js              3D 工坊界面与滚动交互
+public/lion/gallery-3d.js           原生 WebGL / Canvas 立体工坊
+public/lion/craft-film.*            工艺影像页与入口组件
+public/lion/scroll-world-engine.js  影像页滚动引擎
+public/lion/assets/                 页面实际使用的图片和影像
+  home/                             首页
+  history/                          历史
+  legends/                          六色狮
+  regions/                          各地流派
+  craft/                            工艺影像（含 MP4）
+  drums/                            鼓乐互动
+server.js                           本地静态文件与 API 服务
+server/lion-agent.js                AI、检索、工具调用及输入输出校验
+tests/lion.test.mjs                 AI 接口与鼓点测试
 ```
 
-## 内容边界
+网页的静态资源都从 `/lion/assets/` 引用。新增图片时放进对应主题目录，并更新页面引用。`public/lion/assets/craft/lingnan-craft-film.mp4` 是工艺影像页使用的影片；本地服务支持视频分段读取。
 
-- 页面中的狮头为原创矢量教学示意，不是实物照片或产地鉴定依据。
-- “探寻、行进、欢腾”是原创合成教学节奏，不代表传统狮队的固定鼓谱。
-- 六段采青流程是教学编排，实际套路会随地区、阵式和表演传统变化。
-- 单张图片只能支持外观特征观察和可能样式判断，不能确认师承、产地、制作者、真伪或内部材料。
-- AI 请求失败时会返回有明确标识的资料检索结果，不会模拟图片识别成功。
+## AI 配置
 
-## 资料来源
+复制 `.env.example` 中的变量名，在运行服务的环境中设置。`server.js` 不会自动加载 `.env` 文件；例如可用 Node 的 `--env-file=.env` 参数启动。不要把实际密钥提交到 GitHub。
 
-核心资料来自中国非物质文化遗产网、香港非物质文化遗产资料库、新华社和中国社会科学网。具体链接可在网站“作品说明与资料出处”以及 `public/lion/data.js` 中查看。
+| 变量 | 用途 |
+| --- | --- |
+| `MODEL_API_KEY` | 兼容接口的服务端密钥 |
+| `MODEL_BASE_URL` | 模型服务地址，例如兼容 Chat Completions 的 `/v1` 根地址 |
+| `MODEL_NAME` | 文本模型名称 |
+| `VISION_MODEL_NAME` | 可选，图片理解模型；缺省沿用 `MODEL_NAME` |
 
+生成舞狮图片需要服务端模型供应方开放图像生成接口。未配置时，AI 页面仍可展示资料检索结果；页面会明确区分 AI 结果与资料回退结果。用户上传的图片不会写入此仓库。
+
+## 素材与内容
+
+狮头与地区配图为网页展示素材，不能依据单张图片确认产地、师承或真伪。工艺影像是氛围演绎，实际工序以传承人技艺及资料为准。鼓点是浏览器合成的互动体验，不是传统狮队鼓谱的录音。
+
+历史、工艺与流派内容的参考链接见 `public/lion/data.js`。影像滚动引擎的许可文本见 `public/lion/scroll-world-LICENSE.txt`。

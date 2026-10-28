@@ -4,8 +4,8 @@ import {extname,resolve,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {handleLionAPI} from './server/lion-agent.js';
 
-const root=fileURLToPath(new URL('./public/',import.meta.url));
-const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json; charset=utf-8','.wav':'audio/wav'};
+const root=resolve(fileURLToPath(new URL('./public/',import.meta.url)));
+const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json; charset=utf-8','.wav':'audio/wav','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.mp4':'video/mp4'};
 
 async function toRequest(req,origin){
  const chunks=[];let size=0;
@@ -32,8 +32,18 @@ createServer(async(req,res)=>{
   const path=resolve(root,relative);
   if(path!==root&&!path.startsWith(root+sep))throw Object.assign(new Error('forbidden'),{status:403});
   const body=await readFile(path);
-  res.writeHead(200,{'Content-Type':mime[extname(path)]||'application/octet-stream','Cache-Control':'no-cache','X-Content-Type-Options':'nosniff'});
-  res.end(body);
+  const headers={'Content-Type':mime[extname(path)]||'application/octet-stream','Cache-Control':'no-cache','X-Content-Type-Options':'nosniff','Accept-Ranges':'bytes'};
+  const range=req.headers.range?.match(/^bytes=(\d*)-(\d*)$/);
+  if(range){
+   const start=range[1]?Number(range[1]):Math.max(0,body.length-Number(range[2]));
+   const end=range[1]?(range[2]?Number(range[2]):body.length-1):body.length-1;
+   if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start<0||start>=body.length||end<start){res.writeHead(416,{...headers,'Content-Range':`bytes */${body.length}`});res.end();return;}
+   const last=Math.min(end,body.length-1);
+   res.writeHead(206,{...headers,'Content-Range':`bytes ${start}-${last}/${body.length}`,'Content-Length':last-start+1});
+   res.end(req.method==='HEAD'?undefined:body.subarray(start,last+1));return;
+  }
+  res.writeHead(200,{...headers,'Content-Length':body.length});
+  res.end(req.method==='HEAD'?undefined:body);
  }catch(error){
   res.writeHead(error.status||((error.code==='ENOENT')?404:500),{'Content-Type':'text/plain; charset=utf-8'});
   res.end(error.code==='ENOENT'?'Not found':'Request failed');

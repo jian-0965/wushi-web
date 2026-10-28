@@ -9,13 +9,13 @@ export const sources={
  caiqing:{name:'中国社会科学网 · 广东醒狮彰显岭南精神',url:'https://www.cssn.cn/ztzl/jzz/rwln/xwpl/sdbd/202209/t20220923_5540905.shtml'}
 };
 export const regions=[
- {id:'xushui',name:'北狮',place:'北方 · 庙会',en:'NORTHERN LION',kind:'北狮 · 北国灵狮',image:'/lion/region-north.webp',quick:'北国灵狮，形仿真兽，腾跃嬉闹，灵动迎春。',summary:'不同于南狮写意脸谱，北狮取真狮之形，皮毛蓬松鲜活。',body:'一狮嬉闹、一狮相伴，引狮郎引领穿梭。腾跃、滚翻、踩球、越板，技巧凌厉灵动。没有复杂脸谱，全凭动作传递欢愉，鼓点轻快热烈。生于北方庙会烟火，承载迎春纳祥的祈愿，是流淌在北方大地上灵动奔放的瑞兽。'},
- {id:'foshan',name:'佛山醒狮',place:'广东 · 佛山',en:'FOSHAN',kind:'南狮之根 · 五虎传奇',image:'/lion/region-foshan.webp',featured:true,quick:'南狮本源，五虎脸谱，武狮一体，采青纳福。',summary:'岭南醒狮的源头，也是五虎狮头诞生之地。',body:'不追求形似，重在传神。狮头浓彩重绘，以三国人物脸谱定风骨：刘备仁厚、关公忠义、张飞威猛。武与狮共生，拳势融于狮步，一喜一怒、一疑一醒皆有神态。招牌采青，破障、寻青、吐青，步步藏吉兆。锣鼓轰鸣之间，是岭南武人自强不息的风骨，也是南狮文化最耀眼的图腾。'},
- {id:'heshan',name:'鹤山醒狮',place:'广东 · 鹤山',en:'HESHAN',kind:'雅韵鹤山狮',image:'/lion/region-heshan.webp',quick:'长吻雅狮，八音伴舞，气韵舒缓，温婉别致。',summary:'独树一帜的“鹤山装”，狮吻修长舒展，纹路内敛素雅。',body:'少几分刚猛霸气，多几分温婉从容。鼓乐多用八音，节奏舒缓绵长，舞姿柔而不散。不追求惊险特技，重在韵味流淌，在从容起舞间，诉说岭南水乡温柔的民俗诗意。'},
- {id:'tengxian',name:'遂溪醒狮',place:'广东 · 遂溪',en:'SUIXI',kind:'高桩雄狮',image:'/lion/region-suixi.webp',quick:'高桩雄狮，绝技惊天，百狮巡游，气势磅礴。',summary:'遂溪醒狮，以险绝震撼闻名。',body:'硕大艳丽的狮头气势磅礴，舞者踏高耸梅花桩，腾空、跳转、回旋，步步惊心动魄。自古与游神祭祀相伴，百狮同游，声势浩荡。万丈豪情融于锣鼓，以雄健姿态，驱晦迎祥，威震四方。'},
- {id:'jieyang',name:'潮汕青狮',place:'广东 · 潮汕',en:'CHAOSHAN',kind:'神域镇狮',image:'/lion/region-chaoshan.webp',quick:'青面神狮，镇守乡土，肃穆威严，驱邪安境。',summary:'独属于潮汕大地的神秘瑞兽，青面威严，气场肃然。',body:'扎根三山国王信仰，自带镇煞守安的神性。它不轻易起舞，只在盛大游神赛会登场。一舞护一方乡土，镇邪安宅，是潮汕人心中守护家园的威严战神。'},
- {id:'hakka',name:'客家青狮（猫狮）',place:'客家地区 · 祠堂',en:'HAKKA CAT LION',kind:'宗族瑞狮',image:'/lion/region-hakka.webp',quick:'小巧灵狮，祠堂起舞，守护宗族，岁岁平安。',summary:'外形小巧圆润，模样灵动如猫，因此又称猫狮。',body:'扎根客家祠堂文化，伴随宗族祭祀、乔迁盛典登场。没有凌厉张扬的气势，温润内敛。狮舞起落之间，护佑族人顺遂、宗族绵延，是客家血脉里温柔安稳的守护象征。'},
- {id:'nanyang',name:'南洋醒狮',place:'南洋 · 海外华人社群',en:'NANYANG',kind:'跨海传狮',image:'/lion/region-nanyang.webp',quick:'跨海传薪，狮鸣异域，联结侨心，文脉永续。',summary:'百年之前，岭南先民扬帆南下，将醒狮火种带向海外。',body:'根基源自佛山醒狮，保留五虎脸谱、采青古礼。在异国他乡的宗祠、唐人街鼓声再起。一头醒狮，跨越山海，联结游子乡愁，成为海外华人永不熄灭的文化图腾。'}
+ {id:'xushui',name:'北狮',place:'北方 · 庙会',en:'NORTHERN LION',kind:'北狮 · 北国灵狮',image:'/lion/assets/regions/region-north.webp',quick:'北国灵狮，形仿真兽，腾跃嬉闹，灵动迎春。',summary:'不同于南狮写意脸谱，北狮取真狮之形，皮毛蓬松鲜活。',body:'一狮嬉闹、一狮相伴，引狮郎引领穿梭。腾跃、滚翻、踩球、越板，技巧凌厉灵动。没有复杂脸谱，全凭动作传递欢愉，鼓点轻快热烈。生于北方庙会烟火，承载迎春纳祥的祈愿，是流淌在北方大地上灵动奔放的瑞兽。'},
+ {id:'foshan',name:'佛山醒狮',place:'广东 · 佛山',en:'FOSHAN',kind:'南狮之根 · 五虎传奇',image:'/lion/assets/regions/region-foshan.webp',featured:true,quick:'南狮本源，五虎脸谱，武狮一体，采青纳福。',summary:'岭南醒狮的源头，也是五虎狮头诞生之地。',body:'不追求形似，重在传神。狮头浓彩重绘，以三国人物脸谱定风骨：刘备仁厚、关公忠义、张飞威猛。武与狮共生，拳势融于狮步，一喜一怒、一疑一醒皆有神态。招牌采青，破障、寻青、吐青，步步藏吉兆。锣鼓轰鸣之间，是岭南武人自强不息的风骨，也是南狮文化最耀眼的图腾。'},
+ {id:'heshan',name:'鹤山醒狮',place:'广东 · 鹤山',en:'HESHAN',kind:'雅韵鹤山狮',image:'/lion/assets/regions/region-heshan.webp',quick:'长吻雅狮，八音伴舞，气韵舒缓，温婉别致。',summary:'独树一帜的“鹤山装”，狮吻修长舒展，纹路内敛素雅。',body:'少几分刚猛霸气，多几分温婉从容。鼓乐多用八音，节奏舒缓绵长，舞姿柔而不散。不追求惊险特技，重在韵味流淌，在从容起舞间，诉说岭南水乡温柔的民俗诗意。'},
+ {id:'tengxian',name:'遂溪醒狮',place:'广东 · 遂溪',en:'SUIXI',kind:'高桩雄狮',image:'/lion/assets/regions/region-suixi.webp',quick:'高桩雄狮，绝技惊天，百狮巡游，气势磅礴。',summary:'遂溪醒狮，以险绝震撼闻名。',body:'硕大艳丽的狮头气势磅礴，舞者踏高耸梅花桩，腾空、跳转、回旋，步步惊心动魄。自古与游神祭祀相伴，百狮同游，声势浩荡。万丈豪情融于锣鼓，以雄健姿态，驱晦迎祥，威震四方。'},
+ {id:'jieyang',name:'潮汕青狮',place:'广东 · 潮汕',en:'CHAOSHAN',kind:'神域镇狮',image:'/lion/assets/regions/region-chaoshan.webp',quick:'青面神狮，镇守乡土，肃穆威严，驱邪安境。',summary:'独属于潮汕大地的神秘瑞兽，青面威严，气场肃然。',body:'扎根三山国王信仰，自带镇煞守安的神性。它不轻易起舞，只在盛大游神赛会登场。一舞护一方乡土，镇邪安宅，是潮汕人心中守护家园的威严战神。'},
+ {id:'hakka',name:'客家青狮（猫狮）',place:'客家地区 · 祠堂',en:'HAKKA CAT LION',kind:'宗族瑞狮',image:'/lion/assets/regions/region-hakka.webp',quick:'小巧灵狮，祠堂起舞，守护宗族，岁岁平安。',summary:'外形小巧圆润，模样灵动如猫，因此又称猫狮。',body:'扎根客家祠堂文化，伴随宗族祭祀、乔迁盛典登场。没有凌厉张扬的气势，温润内敛。狮舞起落之间，护佑族人顺遂、宗族绵延，是客家血脉里温柔安稳的守护象征。'},
+ {id:'nanyang',name:'南洋醒狮',place:'南洋 · 海外华人社群',en:'NANYANG',kind:'跨海传狮',image:'/lion/assets/regions/region-nanyang.webp',quick:'跨海传薪，狮鸣异域，联结侨心，文脉永续。',summary:'百年之前，岭南先民扬帆南下，将醒狮火种带向海外。',body:'根基源自佛山醒狮，保留五虎脸谱、采青古礼。在异国他乡的宗祠、唐人街鼓声再起。一头醒狮，跨越山海，联结游子乡愁，成为海外华人永不熄灭的文化图腾。'}
 ];
 export const craftSteps=[
  {id:'frame',word:'扎',name:'竹篾立骨',material:'竹篾 · 绑扎',detail:'先以竹篾构建轮廓和支撑，形成额、眼、鼻、嘴的立体结构。骨架决定狮头的基本比例。',tip:'沿着骨架的线条，观察狮头的立体轮廓。'},
