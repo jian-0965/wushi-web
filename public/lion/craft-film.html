@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="description" content="沿着扎、扑、写、装四道工序，走进一只醒狮狮头的制作过程。">
   <title>一只狮头的诞生 · 狮遇</title>
+  <link rel="stylesheet" href="/lion/ai-explainer.css">
   <style>
     :root,.sw-root{--sw-bg:#100c0a;--sw-ink:#f5efe3;--sw-ink-soft:#c2b5a4;--sw-accent:#c8a568;--sw-font-display:"Noto Serif SC","Songti SC",STSong,serif;--sw-font-body:Arial,"PingFang SC","Microsoft YaHei",sans-serif}
     *{box-sizing:border-box}body{margin:0;background:#100c0a;color:#f5efe3;font-family:Arial,"PingFang SC","Microsoft YaHei",sans-serif}
@@ -32,7 +33,7 @@
     @media(prefers-reduced-motion:reduce){#world .sw-hint{display:none}}
   </style>
 </head>
-<body>
+<body class="film-page">
   <div id="world"></div>
   <div class="film-head">
     <a class="film-brand" href="/#craft" aria-label="返回狮遇制作工艺"><i>狮</i><b>狮遇</b></a>
@@ -74,5 +75,6 @@
     buttons.forEach(button=>button.addEventListener('click',()=>scrollTo({top:Number(button.dataset.time)/duration*travel*innerHeight,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})));
     updateStage();
   </script>
+  <script type="module">import {initAIExplainer} from '/lion/ai-explainer.js';initAIExplainer();</script>
 </body>
 </html>

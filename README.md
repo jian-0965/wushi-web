@@ -31,6 +31,9 @@ public/lion/data.js                 文案、流派、资料与节奏数据
 public/lion/art.js                  交互用 SVG 示意
 public/lion/audio.js                鼓、锣、钹的浏览器合成音
 public/lion/culture.js              鼓乐文化介绍
+public/lion/ai-explainer.js         随行 AI 讲解与当前场景识别
+public/lion/ai-explainer.css        随行讲解样式
+public/lion/home-readable.css       首页文字排版调整
 public/lion/gallery.js              3D 工坊界面与滚动交互
 public/lion/gallery-3d.js           原生 WebGL / Canvas 立体工坊
 public/lion/craft-film.*            工艺影像页与入口组件
