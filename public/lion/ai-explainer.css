@@ -17,3 +17,5 @@
 body.film-page .ai-explainer{bottom:190px}body.film-page .ai-explainer-panel{max-height:min(570px,calc(100dvh - 250px))}
 body.agent-active .ai-explainer{display:none}
 @media(max-width:720px){.ai-explainer{right:14px;bottom:max(15px,env(safe-area-inset-bottom))}.ai-explainer-panel{bottom:62px;max-height:calc(100dvh - 100px)}body.film-page .ai-explainer{bottom:230px}body.film-page .ai-explainer-panel{max-height:calc(100dvh - 300px)}.ai-explainer-body{padding:14px}.ai-explainer-head{padding:14px}}
+
+.ai-source-entry{padding:6px 0}.ai-source-entry summary{cursor:pointer;color:#dec18a}.ai-source-entry p{margin:7px 0;font-size:12px;line-height:1.8;color:#d5ccbe}.ai-source-entry small{display:block;margin:5px 0;color:#b4a38b}.ai-source-entry a{display:inline-block;margin-top:6px}

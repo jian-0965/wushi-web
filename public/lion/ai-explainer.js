@@ -99,7 +99,7 @@ export function initAIExplainer(){
       const refs=el('div','ai-explainer-sources');
       for(const doc of data.documents.slice(0,4)){
         const source=sources[doc.source];if(!source)continue;
-        const link=el('a','',`资料 · ${source.name} ↗`);link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';refs.append(link);
+        const entry=el('details','ai-source-entry');entry.append(el('summary','',doc.title||source.name),el('p','',doc.text||''));if(doc.scope)entry.append(el('small','',`适用范围：${doc.scope}`));const link=el('a','',`原始资料 · ${source.name} ↗`);link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';entry.append(link);refs.append(entry);
       }
       if(refs.children.length)pending.append(refs);
       if(Array.isArray(data.trace)){const steps=data.trace.filter(x=>['plan','search_heritage','get_region','get_craft_step','get_rhythm','validate','fallback'].includes(x.tool));const details=el('details','ai-explainer-trace');details.append(el('summary','','本次讲解依据 · '+steps.length+' 步'));const list=el('ol','');for(const step of steps){const item=el('li','');item.append(el('b','',({plan:'识别提问',search_heritage:'资料检索',get_region:'流派工具',get_craft_step:'工艺工具',get_rhythm:'鼓点工具',validate:'结果校验',fallback:'资料兜底'})[step.tool]),el('span','',step.detail));list.append(item);}details.append(list);pending.append(details);}

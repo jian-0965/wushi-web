@@ -5,7 +5,7 @@ const str=(v,n)=>typeof v==='string'&&v.length<=n;
 const record=v=>v&&typeof v==='object'&&!Array.isArray(v);
 const stopWords=new Set(['什么','怎么','如何','为什么','这个','那个','可以','介绍','一下','请问','帮我','看看','图片','照片','狮头','醒狮','舞狮','相关','区别','特点','属于']);
 const expansions={南狮:['广东醒狮','佛山','岭南'],佛山:['南狮','广东醒狮','岭南'],北狮:['徐水','北方'],鹤山:['鸭嘴','佛鹤装'],图片:['识别','狮头','样式'],识别:['图片','佛山装','鹤山装'],工艺:['制作','竹篾','扎作'],制作:['工艺','扎作'],鼓点:['音乐','节奏','锣','钹'],采青:['寻青','见青','探青','吐青'],脸谱:['寓意','颜色','关公','刘备','张飞']};
-const tokens=s=>{const text=String(s).toLowerCase().replace(/\s+/g,'');const raw=[...text.matchAll(/[a-z]+|[\u4e00-\u9fff]{2,4}/g)].map(x=>x[0]);const grams=[...text].filter(c=>/[\u4e00-\u9fff]/.test(c)).flatMap((c,i,a)=>i<a.length-1?[c+a[i+1]]:[]);const result=new Set([...raw,...grams]);for(const [key,values] of Object.entries(expansions))if(text.includes(key))values.forEach(x=>result.add(x));for(const t of stopWords)result.delete(t);return [...result].filter(x=>x.length>1);};
+const tokens=s=>{const text=String(s).toLowerCase().replace(/\s+/g,'');const raw=[...text.matchAll(/[a-z0-9]+|[\u4e00-\u9fff]{2,4}/g)].map(x=>x[0]);const grams=[...text].filter(c=>/[\u4e00-\u9fff]/.test(c)).flatMap((c,i,a)=>i<a.length-1?[c+a[i+1]]:[]);const result=new Set([...raw,...grams]);for(const [key,values] of Object.entries(expansions))if(text.includes(key))values.forEach(x=>result.add(x));for(const t of stopWords)result.delete(t);return [...result].filter(x=>x.length>1);};
 export function searchHeritage(query){const terms=tokens(query);return knowledge.map(d=>{const title=d.title.toLowerCase(),tags=d.tags.toLowerCase(),text=d.text.toLowerCase();let rank=0;for(const t of terms){if(title.includes(t))rank+=7+Math.min(t.length,5);if(tags.includes(t))rank+=4+Math.min(t.length,5);if(text.includes(t))rank+=1+Math.min(t.length,4);}return {...d,rank};}).filter(d=>d.rank>0).sort((a,b)=>b.rank-a.rank||a.id.localeCompare(b.id)).slice(0,5).map(({rank,...d})=>({...d,reference:sources[d.source]}));}
 export const toolDefinitions=[
  {type:'function',function:{name:'search_heritage',description:'查找有出处的狮舞历史、类型、脸谱、工艺和音乐知识。',parameters:{type:'object',properties:{query:{type:'string'}},required:['query'],additionalProperties:false}}},
@@ -58,7 +58,8 @@ const system=`你是“狮遇”的非遗多模态导览Agent。理解用户文�
 
 export async function runLionAgent(input,env,fetcher=fetch){
  const started=Date.now(),trace=[],sceneTool={regions:'get_region',craft:'get_craft_step',drums:'get_rhythm'}[input.scene?.kind],scene=sceneTool?executeLionTool(sceneTool,{id:input.scene.id}):null,initial=searchHeritage(input.question+(input.image?' 图片 狮头 流派':'')+(scene?' '+scene.item.name:''));
- if(!initial.length)initial.push(...searchHeritage('狮舞'));
+ if(!initial.length&&(input.image||scene||/舞狮|醒狮|狮头/.test(input.question)))initial.push(...searchHeritage('南狮 北狮'));
+ if(!initial.length)return {source:'reference',notice:'现有资料中没有找到足以回答这个问题的依据。',answer:'可以换一个更具体的舞狮问题，例如狮头制作、流派特点或鼓乐配合；涉及具体作品时，也可以补充图片与背景。',candidate:'',observations:[],uncertainty:['没有检索到相关资料，本次未生成事实性结论。'],citations:[],actions:[],documents:[],trace:[{tool:'search_heritage',origin:'workflow',status:'fallback',detail:'未检索到相关资料；未调用模型编写结论'}],durationMs:Date.now()-started};
  const docs=new Map(initial.map(d=>[d.id,d])),actions=new Map();trace.push({tool:'plan',origin:'workflow',status:'ok',detail:input.image?'识别到图文联合请求；先观察图像，再用资料核对':'识别到文字提问；先检索非遗资料，再判断是否需要场景工具'});trace.push({tool:'search_heritage',origin:'workflow',status:'ok',detail:`中文关键词扩展与标题、标签、正文加权排序；取前 ${initial.length} 条：${initial.slice(0,3).map(d=>d.title).join('、')||'暂无命中'}`});
  if(scene){actions.set(scene.action.id,scene.action);trace.push({tool:sceneTool,origin:'workflow',status:'ok',detail:`当前画面已绑定：${scene.item.name}（${input.scene.kind} / ${input.scene.id}）`});}
  try{
