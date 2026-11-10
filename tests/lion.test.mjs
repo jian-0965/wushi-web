@@ -23,3 +23,33 @@ test('rhythm scores accurate timing, missing hits and duplicate hits',()=>{const
 
 test('heritage questions retrieve their specific supporting record',()=>{for(const [query,id] of [['哪一年进入国家级非遗名录','heritage-list'],['狮子的喜怒哀乐有哪些表情','lion-emotions'],['华侨为什么也会舞醒狮','lion-overseas'],['开场打拳叫什么','lion-opening'],['谁介绍过扎扑写装四道工序','craft-lineage'],['脸谱颜色全国统一吗','mask-lineage']])assert.equal(searchHeritage(query)[0]?.id,id,query);});
 test('unrelated requests return an honest no-evidence response without calling the model',async()=>{let calls=0;const result=await runLionAgent(validateLionInput({question:'请计算量子纠缠的密度矩阵'}),env,async()=>{calls++;throw Error('unexpected call');});assert.equal(calls,0);assert.equal(result.source,'reference');assert.deepEqual(result.documents,[]);assert.match(result.notice,/没有找到/);});
+
+const craftIds=['frame','paper','paint','finish'];
+const craftAnswer={answer:'狮头制作依次包含扎、扑、写、装四道工序。',candidate:'',observations:[],uncertainty:[],citations:['craft'],actions:craftIds.map(id=>'get_craft_step:'+id)};
+const modelAnswer=value=>Response.json({choices:[{message:{content:JSON.stringify(value)}}]});
+test('all four craft tools can produce a valid final answer instead of falling back',async()=>{
+ let calls=0;
+ const result=await runLionAgent(validateLionInput({question:'狮头是怎样制作的？'}),env,async()=>++calls===1?Response.json({choices:[{message:{tool_calls:craftIds.map((id,i)=>({id:'craft-'+i,type:'function',function:{name:'get_craft_step',arguments:JSON.stringify({id})}}))}}]}):modelAnswer(craftAnswer));
+ assert.equal(result.source,'ai');assert.equal(calls,2);assert.equal(result.actions.length,4);assert.equal(result.trace.filter(x=>x.origin==='model'&&x.tool==='get_craft_step').length,4);
+});
+test('action deduplication keeps every ID checked before trimming visible links',()=>{
+ const actions=new Map(craftIds.map(id=>{const r=executeLionTool('get_craft_step',{id});return [r.action.id,r.action];}));const docs=new Map([['craft',{}]]);
+ assert.equal(validateLionOutput({...craftAnswer,actions:[...craftAnswer.actions,...craftAnswer.actions]},docs,actions,false).actions.length,4);
+ assert.throws(()=>validateLionOutput({...craftAnswer,actions:[...craftAnswer.actions,'invented']},docs,actions,false),/ACTIONS/);
+});
+test('one bounded repair recovers bad citations using only known references',async()=>{
+ let calls=0;const result=await runLionAgent(validateLionInput({question:'狮头制作工艺'}),env,async(url,options)=>{
+  const body=JSON.parse(options.body);calls++;
+  if(calls===1)return modelAnswer({...craftAnswer,actions:[],citations:['made-up']});
+  assert.equal(body.tool_choice,'none');const repair=JSON.parse(body.messages.at(-1).content);assert.equal(repair.error,'CITATIONS');assert.ok(repair.citationIds.includes('craft'));assert.deepEqual(repair.actionIds,[]);
+  return modelAnswer({...craftAnswer,actions:[]});
+ });assert.equal(result.source,'ai');assert.equal(calls,2);assert.ok(result.trace.some(x=>x.tool==='repair'));assert.deepEqual(result.citations,['craft']);
+});
+test('failed repair falls back with a precise diagnostic and cannot loop',async()=>{
+ let calls=0;const result=await runLionAgent(validateLionInput({question:'狮头制作工艺'}),env,async()=>{calls++;return modelAnswer({...craftAnswer,actions:[],citations:['made-up']});});
+ assert.equal(calls,2);assert.equal(result.source,'reference');assert.match(result.notice,/引用未通过/);assert.ok(!result.citations.includes('made-up'));
+});
+test('repair cannot execute additional tools even if the provider ignores tool_choice',async()=>{
+ let calls=0;const result=await runLionAgent(validateLionInput({question:'狮头制作工艺'}),env,async()=>++calls===1?modelAnswer({...craftAnswer,actions:['invented']}):Response.json({choices:[{message:{tool_calls:[{id:'extra',type:'function',function:{name:'get_craft_step',arguments:'{"id":"frame"}'}}]}}]}));
+ assert.equal(calls,2);assert.equal(result.source,'reference');assert.ok(!result.trace.some(x=>x.origin==='model'&&x.tool==='get_craft_step'));assert.match(result.notice,/安全上限/);
+});
