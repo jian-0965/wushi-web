@@ -5,7 +5,8 @@ import {enableAudio,hit,stop,playPattern,scoreRhythm,rhythmWav} from './audio.js
 import {galleryMarkup,galleryAction,initGallery} from './gallery.js';
 import {craftFilmTeaser} from './craft-film.js';
 import {initAIExplainer} from './ai-explainer.js';
-const nav=[['home','作品说明'],['history','历史简介'],['craft','制作工艺'],['drums','鼓点播放器'],['agent','多模态智能体']];
+import {quizPage,initQuiz} from './quiz.js';
+const nav=[['home','作品说明'],['history','历史简介'],['craft','制作工艺'],['drums','鼓点播放器'],['quiz','知识竞赛'],['agent','多模态智能体']];
 const homeNav=[['history','历史'],['history','各地流派','regional-lions'],['drums','鼓点互动'],['agent','AI 导览']];
 const legendLions=[
  {name:'刘备狮',alias:'黄狮',color:'#f2bf38',symbol:'仁德 · 权势 · 财富',image:'/lion/assets/legends/legend-liubei.webp',text:'刘备狮以金黄为主色调，色调华贵稳重。刘备是仁君，这头狮代表仁德、权势与财富，寓意家业兴旺、福泽绵长，适合祈求顺遂丰收、事业稳固。'},
@@ -16,7 +17,7 @@ const legendLions=[
  {name:'黄忠狮',alias:'橙狮',color:'#ff8b32',symbol:'忠勇 · 坚守 · 赤诚',image:'/lion/assets/legends/legend-huangzhong.webp',text:'黄忠狮是温暖的橙色调。黄忠老当益壮、忠心不改，橙狮象征忠勇无双，寓意坚守本心、老而弥坚，代表长久的赤诚与坚守。'}
 ];
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-let page=nav.some(x=>x[0]===location.hash.slice(1))?location.hash.slice(1):'home',era=0,craft=0,progress=2,pattern=0,bpm=80,volume=.55,playing=false,recording=null,practiceTimer,loop=true,lastScore=null;
+let page=new URLSearchParams(location.search).get('section')==='quiz'?'quiz':nav.some(x=>x[0]===location.hash.slice(1))?location.hash.slice(1):'home',era=0,craft=0,progress=2,pattern=0,bpm=80,volume=.55,playing=false,recording=null,practiceTimer,loop=true,lastScore=null;
 let palette={color:'#b94131',accent:'#eac878'},saved={visits:[],rhythm:[],craft:null},homeMotionCleanup=null,galleryCleanup=null;
 let craftInk='#a81722',craftDrawing=[],installedParts=new Set(),selectedPart='',craftAudio=null,activeCraftPath=null,craftTemplate=-1;
 try{const s=JSON.parse(localStorage.getItem('shiyu.v1'));if(s&&Array.isArray(s.visits)&&Array.isArray(s.rhythm))saved=s;if(/^#[a-f0-9]{6}$/i.test(s?.craft?.color)&&/^#[a-f0-9]{6}$/i.test(s?.craft?.accent))palette=s.craft;}catch{}
@@ -36,19 +37,22 @@ function render(){
  const isHistory=page==='history';
  const isCraft=page==='craft';
  const isDrums=page==='drums';
+ const isQuiz=page==='quiz';
  const isAgent=page==='agent';
  document.body.classList.toggle('home-active',isHome);
  document.body.classList.toggle('history-active',isHistory);
  document.body.classList.toggle('craft-active',isCraft);
  document.body.classList.toggle('drums-active',isDrums);
+ document.body.classList.toggle('quiz-active',isQuiz);
  document.body.classList.toggle('agent-active',isAgent);
- const header=`<header class="${isHome?'home-header':isHistory?'history-header':isCraft?'craft-header':''}"><div class="masthead"><a class="brand" href="#home"><span class="seal">狮</span><span><strong>狮遇</strong><small>非遗舞狮互动馆</small></span></a><p>让非遗，被看见、被听见。</p><button class="agent-shortcut" data-page="agent"><i></i> 智能非遗导览 <span>↗</span></button></div><nav aria-label="主导航">${nav.map(([id,name],i)=>`<button data-page="${id}" ${page===id?'aria-current="page"':''}><span class="nav-no">0${i+1}</span>${name}</button>`).join('')}</nav></header>`;
- $('#app').innerHTML=`${header}<main id="main" class="${isHome?'home-main':isHistory?'history-main':isCraft?'craft-main':isAgent?'agent-main':''}" tabindex="-1">${({home,history:historyPage,craft:craftPage,drums:drumsPage,agent:agentPage})[page]()}</main><footer class="${isHome?'home-footer':isHistory?'history-footer':isCraft?'craft-footer':''}"><span>狮遇 <em>·</em> 数字非遗互动馆</span><span>以形识狮，以声入境。</span>${button('作品与资料 ↗','sources','text-button')}</footer>`;
+ const header=`<header class="${isHome?'home-header':isHistory?'history-header':isCraft?'craft-header':isQuiz?'quiz-header':''}"><div class="masthead"><a class="brand" href="#home"><span class="seal">狮</span><span><strong>狮遇</strong><small>非遗舞狮互动馆</small></span></a><p>让非遗，被看见、被听见。</p><button class="agent-shortcut" data-page="agent"><i></i> 智能非遗导览 <span>↗</span></button></div><nav aria-label="主导航">${nav.map(([id,name],i)=>`<button data-page="${id}" ${page===id?'aria-current="page"':''}><span class="nav-no">0${i+1}</span>${name}</button>`).join('')}</nav></header>`;
+ $('#app').innerHTML=`${header}<main id="main" class="${isHome?'home-main':isHistory?'history-main':isCraft?'craft-main':isQuiz?'quiz-main':isAgent?'agent-main':''}" tabindex="-1">${({home,history:historyPage,craft:craftPage,drums:drumsPage,quiz:quizPage,agent:agentPage})[page]()}</main><footer class="${isHome?'home-footer':isHistory?'history-footer':isCraft?'craft-footer':isQuiz?'quiz-footer':''}"><span>狮遇 <em>·</em> 数字非遗互动馆</span><span>以形识狮，以声入境。</span>${button('作品与资料 ↗','sources','text-button')}</footer>`;
  if(isHistory)$('#main').insertAdjacentHTML('beforeend',regionalArchive());
  if(isHome){$('.jack-about .about-cta')?.insertAdjacentHTML('beforebegin',legendArchive());initHomeMotion();const motionCleanup=homeMotionCleanup,legendCleanup=initLegendCards();homeMotionCleanup=()=>{motionCleanup?.();legendCleanup?.();};}
  if(isHistory){const historyCleanup=initHistoryTimeline(),regionCleanup=initRegionalCards();homeMotionCleanup=()=>{historyCleanup?.();regionCleanup?.();};}
  if(isCraft)galleryCleanup=initGallery();
  if(page==='drums')initDrumCulture();
+ if(page==='quiz')initQuiz();
  if(page==='agent'&&configured===null)fetch('/api/lion-agent/status').then(r=>r.json()).then(v=>{configured=!!v.configured;if(page==='agent'&&$('#agent-status'))$('#agent-status').textContent=configured?'文字 · 图片 · 浏览器语音转文字':'AI 暂未配置，仍可检索资料';}).catch(()=>{});
 }
 function legendArchive(){return `<section class="lion-legends reveal" aria-labelledby="legend-title"><div class="legend-heading"><span>色彩与人物</span><h3 id="legend-title">六色英雄狮</h3><p>六张卡牌将从中央展开。点击一只狮子，阅读它的角色、色彩与民俗寓意。</p></div><div class="legend-stack" id="legend-stack">${legendLions.map((x,i)=>`<button class="legend-card" data-action="lion-legend" data-index="${i}" style="--accent:${x.color};--lion-image:url('${x.image}')" aria-label="查看${x.name}知识文档"><span class="legend-number">0${i+1}</span><span class="legend-face" aria-hidden="true"></span><span class="legend-meta"><small>${x.alias}</small><b>${x.name}</b><em>${x.symbol}</em></span></button>`).join('')}</div><p class="legend-hint">点击卡牌查看知识文档 <span>点击了解 ↗</span></p></section><dialog class="lion-dialog" id="lion-dialog" aria-labelledby="legend-dialog-title"><button class="dialog-close" data-action="close-legend" aria-label="关闭知识文档">×</button><article><div class="dialog-visual"><span class="legend-face" id="dialog-face"></span><span id="dialog-number">01</span></div><div class="dialog-copy"><span id="dialog-alias">黄狮</span><h2 id="legend-dialog-title">刘备狮</h2><p class="dialog-symbol" id="dialog-symbol"></p><p id="dialog-text"></p><small>民俗寓意随地区、狮队与传承传统有所差异。</small></div></article></dialog>`;}

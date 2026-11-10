@@ -1,6 +1,6 @@
 # 狮遇 · 中国舞狮互动馆
 
-围绕中国舞狮的文化展示与互动体验。当前页面包括作品说明、历史与各地流派、狮头制作、鼓点互动，以及支持文字、图片和语音转文字的 AI 导览。制作工艺下方还有实时绘制的 3D 工坊与可滚动观看的工艺影像。
+围绕中国舞狮的文化展示与互动体验。当前页面包括作品说明、历史与各地流派、狮头制作、鼓点互动、知识竞赛，以及支持文字、图片和语音转文字的 AI 导览。制作工艺下方还有实时绘制的 3D 工坊与可滚动观看的工艺影像。
 
 本仓库只包含舞狮项目。网页入口是 `public/index.html`，本地服务由 `server.js` 提供；无需安装第三方 npm 包。
 
@@ -28,6 +28,10 @@ public/index.html                    网页入口
 public/lion/main.js                 页面与交互
 public/lion/style.css               页面样式
 public/lion/data.js                 文案、流派、资料与节奏数据
+public/lion/quiz.js                 登录、30题竞赛与实时排行榜
+public/lion/quiz.css                竞赛界面样式
+public/lion/supabase-config.example.js Supabase 前端配置模板
+supabase/                           知识竞赛数据库脚本
 public/lion/art.js                  交互用 SVG 示意
 public/lion/audio.js                鼓、锣、钹的浏览器合成音
 public/lion/culture.js              鼓乐文化介绍
@@ -51,6 +55,10 @@ tests/lion.test.mjs                 AI 接口与鼓点测试
 ```
 
 网页的静态资源都从 `/lion/assets/` 引用。新增图片时放进对应主题目录，并更新页面引用。`public/lion/assets/craft/lingnan-craft-film.mp4` 是工艺影像页使用的影片；本地服务支持视频分段读取。
+
+## 知识竞赛配置
+
+复制 `public/lion/supabase-config.example.js` 为 `public/lion/supabase-config.js`，填入 Supabase Project URL 和 publishable key。按 `supabase/README.md` 执行竞赛数据库脚本，并设置认证回跳地址。实际配置文件已加入忽略规则，不要提交服务端密钥或数据库密码。
 
 ## AI 配置
 
